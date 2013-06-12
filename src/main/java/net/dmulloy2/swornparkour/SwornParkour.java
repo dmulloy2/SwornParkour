@@ -91,6 +91,7 @@ public class SwornParkour extends JavaPlugin
 		resourceHandler = new ResourceHandler(this, this.getClassLoader());
 		
 		parkourManager = new ParkourManager(this);
+		fileHelper = new FileHelper(this);
 		
 		currentVersion = Double.valueOf(getDescription().getVersion().replaceFirst("\\.", ""));
 		
@@ -103,7 +104,6 @@ public class SwornParkour extends JavaPlugin
 		
 		loadGames();
 		
-		fileHelper = new FileHelper(this);
 		savedPlayers = fileHelper.loadSavedPlayers();
 		for (Player player : getServer().getOnlinePlayers())
 		{
