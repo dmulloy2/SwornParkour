@@ -92,6 +92,17 @@ public class SwornParkour extends JavaPlugin
 		
 		parkourManager = new ParkourManager(this);
 		
+		currentVersion = Double.valueOf(getDescription().getVersion().replaceFirst("\\.", ""));
+		
+		saveDefaultConfig();
+		loadConfig();
+		
+		updateRewards();
+		
+		createDirectories();
+		
+		loadGames();
+		
 		fileHelper = new FileHelper(this);
 		savedPlayers = fileHelper.loadSavedPlayers();
 		for (Player player : getServer().getOnlinePlayers())
@@ -104,17 +115,6 @@ public class SwornParkour extends JavaPlugin
 				}
 			}
 		}
-		
-		currentVersion = Double.valueOf(getDescription().getVersion().replaceFirst("\\.", ""));
-		
-		saveDefaultConfig();
-		loadConfig();
-		
-		updateRewards();
-		
-		createDirectories();
-		
-		loadGames();
 		
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new PlayerListener(this), this);
