@@ -11,9 +11,9 @@ import net.dmulloy2.swornparkour.util.InventoryWorkaround;
  * @author dmulloy2
  */
 
-public class CmdRedeem extends SwornParkourCommand
+public class CmdClaim extends SwornParkourCommand
 {
-	public CmdRedeem(SwornParkour plugin)
+	public CmdClaim(SwornParkour plugin)
 	{
 		super(plugin);
 		this.name = "claim";
@@ -30,6 +30,8 @@ public class CmdRedeem extends SwornParkourCommand
 			err("&cYou have no rewards to claim!");
 			return;
 		}
+		
+		sendMessage("&eClaiming rewards...");
 		
 		List<ItemStack> items = getManager().redemption.get(player.getName());
 		

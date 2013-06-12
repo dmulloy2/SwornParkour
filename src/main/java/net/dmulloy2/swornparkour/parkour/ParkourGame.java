@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import net.dmulloy2.swornparkour.SwornParkour;
-import net.dmulloy2.swornparkour.commands.CmdRedeem;
+import net.dmulloy2.swornparkour.commands.CmdClaim;
 import net.dmulloy2.swornparkour.parkour.objects.ParkourKickReason;
 import net.dmulloy2.swornparkour.parkour.objects.ParkourPlayer;
 import net.dmulloy2.swornparkour.parkour.objects.ParkourReward;
@@ -199,7 +199,7 @@ public class ParkourGame
 					if (redemption.size() > 0)
 					{
 						player.sendMessage("&eYou have until the next restart to claim the rest of your rewards!");
-						player.sendMessage("&eUse {0}!", new CmdRedeem(plugin).getUsageTemplate(false));
+						player.sendMessage("&eUse {0}!", new CmdClaim(plugin).getUsageTemplate(false));
 						
 						plugin.getParkourManager().redemption.put(player.getPlayer().getName(), redemption);
 					}
@@ -225,7 +225,7 @@ public class ParkourGame
 					if (redemption.size() > 0)
 					{
 						player.sendMessage("&eYou have until the next restart to claim the rest of your rewards!");
-						player.sendMessage("&eUse {0}!", new CmdRedeem(plugin).getUsageTemplate(false));
+						player.sendMessage("&eUse {0}!", new CmdClaim(plugin).getUsageTemplate(false));
 						
 						plugin.getParkourManager().redemption.put(player.getPlayer().getName(), redemption);
 					}
