@@ -297,7 +297,7 @@ public class SwornParkour extends JavaPlugin
 
     public double updateCheck(double currentVersion)
     {
-        String pluginUrlString = "http://dev.bukkit.org/server-mods/swornrpg/files.rss";
+        String pluginUrlString = "http://dev.bukkit.org/bukkit-mods/swornparkour/files.rss";
         try
         {
             URL url = new URL(pluginUrlString);

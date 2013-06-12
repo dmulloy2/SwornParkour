@@ -55,6 +55,7 @@ item-rewards-enabled: true
 item-rewards-cumulative: true
 
 # Format: "[itemid]:[dat] [amount] enchants:[enchantment]:[level],[enchantment]:[level]... name:displayName lore:lore,lore"
+# !!!IMPORTANT!!!: There can only be ONE reward per point value!
 item-rewards:
   0: "357:0 1"
   1: "260:0 1"
