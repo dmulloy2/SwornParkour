@@ -1,0 +1,54 @@
+name: SwornParkour
+main: net.dmulloy2.swornparkour.SwornParkour
+version: "${project.version}"
+author: dmulloy2
+softdepend: [WorldEdit, Vault, Essentials]
+description: Comprehensive Parkour plugin with configurable rewards!
+commands:
+  parkour:
+    description: SwornParkour root command
+    usage: |
+           /<command>
+           /<command> <args>
+    aliases: [swornparkour]
+permissions:
+  parkour.admin:
+    description: Gives access to all SwornParkour features
+    default: op
+    children:
+      parkour.cmd.reload: true
+      parkour.cmd.kick: true
+      parkour.cmd.delete: true
+      parkour.builder: true
+  parkour.builder:
+    description: Allows access to permissions meant for builders
+    default: false
+    children:
+      parkour.cmd.setpoint: true
+      parkour.cmd.create: true
+      parkour.cmd.abandon: true
+      parkour.cmd.spawn: true
+      parkour.build: true
+  parkour.cmd.spawn:
+    description: Allows the player to teleport to an arena's spawn
+  parkour.cmd.reload:
+    description: Allows the player to reload the plugin
+    default: false
+  parkour.cmd.setpoint:
+    description: Allows the usage of /parkour setpoint
+    default: false
+  parkour.cmd.create:
+    description: Allows the creation of new arenas
+    default: false
+  parkour.cmd.abandon:
+    description: Allows the usage of /parkour abandon
+    default: false
+  parkour.cmd.kick:
+    description: Allows the kicking of players from games
+    default: false
+  parkour.cmd.delete:
+    description: Allows the deletion of parkour arenas
+    default: false
+  parkour.build:
+    description: Allows players to build in arenas
+    default: false

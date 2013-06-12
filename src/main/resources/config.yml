@@ -1,0 +1,83 @@
+#############################################################
+#+---------------------------------------------------------+#
+#|                                                         |#
+#|         SwornParkour Main Configuration File            |#
+#|                 Created by dmulloy2                     |#
+#|                                                         |#
+#+---------------------------------------------------------+#
+#############################################################
+
+# If you want to use special characters in this document, such as accented letters, you MUST save the file as UTF-8, not ANSI.
+# If you receive an error when SwornParkour loads, ensure that:
+#  - No tabs are present: YAML only allows spaces
+#  - Indents are correct: YAML hierarchy is based entirely on indentation
+#  - You have "escaped" all apostrophes in your text: If you want to write "don't", for example, write "don''t" instead (note the doubled apostrophe)
+#  - Text with symbols is enclosed in single or double quotation marks
+
+
+#############################################################
+#+---------------------------------------------------------+#
+#|                                                         |#
+#|                      General                            |#
+#|                                                         |#
+#+---------------------------------------------------------+#
+#############################################################
+
+# The time players must wait before teleporting to parkour (in seconds)
+# Set to 0 to disable
+teleport-timer: 3
+
+# Extra output to console
+debug: false
+
+# Automatic Update Checking
+update-checker: true
+
+#############################################################
+#+---------------------------------------------------------+#
+#|                                                         |#
+#|                     Rewards                             |#
+#|                                                         |#
+#+---------------------------------------------------------+#
+#############################################################
+
+# The rewards players receive when completing Parkour
+# Cash reward (requires vault)
+# Amount (in cash) received = multiplier x points
+cash-reward:
+  enabled: true
+  multiplier: 10
+  
+# Item rewards
+item-rewards-enabled: true
+
+# Do rewards accumulate? Or do they just get what is allotted?
+item-rewards-cumulative: true
+
+# Format: "[itemid]:[dat] [amount] enchants:[enchantment]:[level],[enchantment]:[level]... name:displayName lore:lore,lore"
+item-rewards:
+  0: "357:0 1"
+  1: "260:0 1"
+  2: "360:0 1"
+  3: "364:0 1"
+  4: "400:0 1"
+  5: "366:0 1"
+  6: "297:0 3"
+  7: "396:0 2"
+  8: "265:0 3"
+  9: "265:0 5"
+  10: "265:0 8"
+  11: "42:0 1"
+  12: "41:0 1"
+  13: "257:0 1 enchants:eff:2"
+  14: "257:0 1 enchants:eff:3"
+  15: "278:0 1 enchants:eff:1"
+  16: "278:0 1 enchants:eff:2"
+  17: "278:0 1 enchants:eff:3"
+  18: "267:0 1 enchants:sharp:1"
+  19: "267:0 1 enchants:sharp:2"
+  20: "267:0 1 enchants:sharp:3"
+  21: "276:0 1 enchants:sharp:2"
+  22: "276:0 1 enchants:sharp:3"
+  23: "322:1 10"
+  24: "267:0 1 enchants:sharp:4,knock:3,fireaspect:2 name:&4&oParkour_Master"
