@@ -14,6 +14,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.material.MaterialData;
 
 import net.dmulloy2.swornparkour.parkour.ParkourGame;
 import net.dmulloy2.swornparkour.parkour.objects.CompositeEnchantment;
@@ -391,7 +392,12 @@ public class FileHelper
 				int dat = fc.getInt(path + "dat");
 
 				ItemStack stack = new ItemStack(id, amt);
-				if (dat > 0) stack.getData().setData((byte) dat);
+				if (dat > 0)
+				{
+					MaterialData data = stack.getData();
+					data.setData((byte)dat);
+					stack.setData(data);
+				}
 				
 				if (fc.getBoolean(path + "hasEnchants"))
 				{
@@ -439,7 +445,12 @@ public class FileHelper
 				int dat = fc.getInt(path + "dat");
 				
 				ItemStack stack = new ItemStack(id, amt);
-				if (dat > 0) stack.getData().setData((byte) dat);
+				if (dat > 0)
+				{
+					MaterialData data = stack.getData();
+					data.setData((byte)dat);
+					stack.setData(data);
+				}
 				
 				if (fc.getBoolean(path + "hasEnchants"))
 				{
@@ -508,7 +519,12 @@ public class FileHelper
 			int dat = fc.getInt(path + "dat");
 			
 			ItemStack stack = new ItemStack(id, amt);
-			if (dat > 0) stack.getData().setData((byte) dat);
+			if (dat > 0)
+			{
+				MaterialData data = stack.getData();
+				data.setData((byte)dat);
+				stack.setData(data);
+			}
 			
 			if (fc.getBoolean(path + "hasEnchants"))
 			{
@@ -556,7 +572,12 @@ public class FileHelper
 			int dat = fc.getInt(path + "dat");
 			
 			ItemStack stack = new ItemStack(id, amt);
-			if (dat > 0) stack.getData().setData((byte) dat);
+			if (dat > 0)
+			{
+				MaterialData data = stack.getData();
+				data.setData((byte)dat);
+				stack.setData(data);
+			}
 			
 			if (fc.getBoolean(path + "hasEnchants"))
 			{

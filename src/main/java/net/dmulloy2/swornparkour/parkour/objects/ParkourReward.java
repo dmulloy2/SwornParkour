@@ -5,6 +5,7 @@ import java.util.List;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.material.MaterialData;
 
 /**
  * @author dmulloy2
@@ -34,7 +35,9 @@ public class ParkourReward
 		ItemStack stack = new ItemStack(itemId, amount);
 		if (data > 0)
 		{
-			stack.getData().setData(data);
+			MaterialData materialData = stack.getData();
+			materialData.setData(data);
+			stack.setData(materialData);
 		}
 		
 		if (enchantments.size() > 0)
