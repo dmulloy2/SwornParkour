@@ -68,14 +68,9 @@
 ** http://dev.bukkit.org/bukkit-mods/swornparkour/ **
 ----
 
-==Donations!
-If SwornParkour has made a significant impact on your server and you feel like donating, click the button below! (Please do not donate more than you can afford!)
-
-<<center>>[[https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=AUPCFVSZQVDU2|{{https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif}}]]<</center>>
-----
 
 ==Official SwornParkour Servers
-[[http://shadowvolt.com|{{http://i.troll.ws/d4a0ffb7.gif}}]]
+{{http://i.troll.ws/d4a0ffb7.gif}}
 ----
 
 ==Bug Reporting
