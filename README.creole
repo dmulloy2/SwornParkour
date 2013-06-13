@@ -1,2 +1,89 @@
+{{http://i.troll.ws/2acf8b1b.jpg}}
 =SwornParkour
-** Comprehensive Parkour plugin with configurable rewards based upon points
+** SwornParkour is a plugin whose goal is to add a whole new dimension to parkour: thought. Too many times I have seen parkour as just something people do on the leaves of my HG spawn when they are bored, or attempting to "parkour" around spawn. My hope by releasing this plugin is that players will think about possible routes to earn more points, and in turn more items and money. This plugin attempts to accomplish this by having builders place LapisLazuli blocks in seemingly random, hard to find places. Players will then attempt to find and reach these blocks by completing harder jumps or finding secret passageways. **
+----
+
+==Features
+* Fully customizable rewards
+* Block break and place protection in arena areas
+* Step-by-step walkthrough on how to create arenas
+* Inventories are saved when a player logs out or the server shuts down, then given when they log back in
+* Rewards are cached if a player does not have enough room in their inventory
+----
+
+==Development Builds
+** Development Builds can be found at our continuous integration server. These builds are not approved by the BukkitDev staff and are to be used at your own risk. http://jenkins.minesworn.com/job/SwornParkour/ **
+----
+
+==Installation
+* Download the latest build
+* Put it in your /plugins folder
+* All the files will generate on their own
+* Enjoy the plugin!
+----
+
+==Setting up Arenas
+* Create a parkour arena with 24 LapisLazuli blocks fairly well hidden
+* Use /parkour create to create a new arena
+* Go through the various steps in creating an arena (the plugin will walk you through step by step)
+* Play parkour!
+----
+
+==Commands
+|**Usage**|**Description**|**Permission**|
+|/parkour abandon|Abandons the arena you are currently creating|parkour.cmd.abandon|
+|/parkour claim|Claims rewards from the previous game||
+|/parkour create|Creates a brand new arena|parkour.cmd.create|
+|/parkour delete <id>|Deletes an arena|parkour.cmd.delete|
+|/parkour help [page]|Displays plugin help||
+|/parkour join <id>|Join parkour||
+|/parkour kick <player>|Kicks a player from parkour|parkour.cmd.kick|
+|/parkour leave|Leave parkour||
+|/parkour reload|Reloads the plugin|parkour.cmd.reload|
+|/parkour setpoint|Sets a point in the arena you are creating|parkour.cmd.setpoint|
+|/parkour spawn <id>|Teleports to the spawn of a parkour arena|parkour.cmd.spawn|
+----
+
+==Permissions
+|**Node**|**Description**|
+|parkour.admin|Allows access to all SwornParkour commands|
+|parkour.builder|Allows access to commands meant for builders|
+|parkour.build|Allows players to break and place in arenas|
+** Individual nodes can be found [[https://github.com/dmulloy2/SwornParkour/blob/master/src/main/resources/plugin.yml|here]] **
+----
+
+==Configuration
+|**Option**|**Input**|**Description**|
+|teleport-timer|integer|Time players must wait before teleporting to parkour|
+|debug|boolean|Extra output to console
+|update-checker|boolean|Does the plugin check for updates?|
+|cash-reward enabled|boolean|Do players receive cash for completing parkour?|
+|cash-reward multiplier|integer|Amount received = multiplier x points|
+|item-rewards-enabled|boolean|Do players receive item rewards for completing parkour?|
+|item-rewards-cumulative|boolean|Do rewards accumulate? Or do they just get what is allotted?|
+|item-rewards|string|Format: [points]:"[itemid]:[dat] [amount] enchants:[enchantment]:[level],[enchantment]:[level]... name:displayName lore:lore,lore"
+----
+
+==Check out SwornParkour on BukkitDev!
+** http://dev.bukkit.org/bukkit-mods/swornparkour/ **
+----
+
+==Donations!
+If SwornParkour has made a significant impact on your server and you feel like donating, click the button below! (Please do not donate more than you can afford!)
+
+<<center>>[[https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=AUPCFVSZQVDU2|{{https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif}}]]<</center>>
+----
+
+==Official SwornParkour Servers
+[[http://shadowvolt.com|{{http://i.troll.ws/d4a0ffb7.gif}}]]
+----
+
+==Bug Reporting
+When reporting bugs, please follow this template:
+* Provide any relevant stack traces (Use pastie or pastebin)
+* Provide the version of both CraftBukkit/Spigot and SwornParkour (found with /version and /version SwornParkour, respectively)
+* Provide a detailed description of the problem and how it came about, as well as all (if any) steps taken to remedy the problem
+===Notes
+* Support will not be given for any of the following: Offline Servers and Servers running ancient versions of either Bukkit/Spigot or Java.
+* SwornParkour has been fully tested (as well as built with) with the latest builds of both Java and Bukkit.
+----
