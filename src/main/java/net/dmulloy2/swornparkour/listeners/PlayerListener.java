@@ -179,6 +179,8 @@ public class PlayerListener implements Listener
 			{
 				task.cancel();
 				
+				plugin.waiting.remove(task);
+				
 				event.getPlayer().sendMessage(FormatUtil.format("&cCancelled!"));
 			}
 		}
