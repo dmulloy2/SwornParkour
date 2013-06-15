@@ -21,19 +21,19 @@ public class CmdVersion extends SwornParkourCommand
 	@Override
 	public void perform()
 	{
-		sendMessage("&e====[ &aSwornParkour &e]====");
+		sendMessage("&3====[ &eSwornParkour &3]====");
 		
 		StringBuilder line = new StringBuilder();
-		line.append("&eAuthor: ");
+		line.append("&bAuthor: ");
 		for (String author : plugin.getDescription().getAuthors())
 		{
-			line.append("&a" + author + "&e, ");
+			line.append("&e" + author + "&b, ");
 		}
 		line.deleteCharAt(line.lastIndexOf(","));
 		sendMessage(line.toString());
 		
-		sendMessage("&eVersion: &a{0}", plugin.getDescription().getFullName());
-		sendMessage("&eUpdate Available: &a{0}", plugin.updateNeeded() ? "true" : "false");
-		sendMessage("&eDownload:&a http://dev.bukkit.org/bukkit-mods/swornparkour/");
+		sendMessage("&bVersion: &e{0}", plugin.getDescription().getFullName());
+		sendMessage("&bUpdate Available: &e{0}", plugin.updateNeeded() ? "true" : "false");
+		sendMessage("&bDownload:&e http://dev.bukkit.org/bukkit-mods/swornparkour/");
 	}
 }

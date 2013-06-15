@@ -29,7 +29,7 @@ public class CmdList extends SwornParkourCommand
 		List<String> lines = new ArrayList<String>();
 		
 		StringBuilder line = new StringBuilder();
-		line.append("&e====[ &aAvailable Arenas &e]====");
+		line.append("&3====[ &eAvailable Arenas &3]====");
 		lines.add(line.toString());
 		
 		for (ParkourZone zone : plugin.loadedArenas)
