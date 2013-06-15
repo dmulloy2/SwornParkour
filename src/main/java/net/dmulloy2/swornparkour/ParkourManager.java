@@ -14,7 +14,6 @@ import net.dmulloy2.swornparkour.util.InventoryWorkaround;
 import net.dmulloy2.swornparkour.util.Util;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -210,24 +209,16 @@ public class ParkourManager
 		plugin.getFileHelper().deleteSavedPlayer(name);
 	}
 	
-	public boolean inventoryHasRoom(Player player, ItemStack item)
+	public boolean inventoryHasRoom(Player player)
 	{
-		final int maxStackSize = (item.getMaxStackSize() == -1) ? player.getInventory().getMaxStackSize() : item.getMaxStackSize();
-		int amount = item.getAmount();
-		
-		for (ItemStack stack : player.getInventory().getContents())
+		int count = 0;
+		PlayerInventory inv = player.getInventory();
+		for (ItemStack stack : inv.getContents())
 		{
-			if (stack == null || stack.getType().equals(Material.AIR))
-				amount -= maxStackSize;			
-			else if (stack.getTypeId() == item.getTypeId() && 
-					stack.getDurability() == item.getDurability() &&
-					(stack.getEnchantments().size() == 0 ? item.getEnchantments().size() == 0 :
-						stack.getEnchantments().equals(item.getEnchantments())))
-				amount -= maxStackSize - stack.getAmount();
-			
-			if (amount <= 0)
-				return true;
+			if (stack == null)
+				count++;
 		}
-		return false;
+		
+		return count > 0;
 	}
 }

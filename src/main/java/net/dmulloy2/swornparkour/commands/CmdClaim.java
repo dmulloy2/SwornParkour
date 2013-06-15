@@ -2,10 +2,9 @@ package net.dmulloy2.swornparkour.commands;
 
 import java.util.List;
 
-import org.bukkit.inventory.ItemStack;
-
 import net.dmulloy2.swornparkour.SwornParkour;
-import net.dmulloy2.swornparkour.util.InventoryWorkaround;
+
+import org.bukkit.inventory.ItemStack;
 
 /**
  * @author dmulloy2
@@ -37,7 +36,9 @@ public class CmdClaim extends SwornParkourCommand
 		
 		for (ItemStack item : items)
 		{
-			InventoryWorkaround.addItems(player.getInventory(), item);
+			player.getInventory().addItem(item);
 		}
+		
+		getManager().redemption.remove(player.getName());
 	}
 }

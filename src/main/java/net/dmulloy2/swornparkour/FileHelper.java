@@ -309,8 +309,11 @@ public class FileHelper
 						level = Integer.parseInt(split3[1]);
 					}
 					
-					CompositeEnchantment enchantment = new CompositeEnchantment(enchant, level);
-					enchantments.add(enchantment);
+					if (enchant != null && level > 0)
+					{
+						CompositeEnchantment enchantment = new CompositeEnchantment(enchant, level);
+						enchantments.add(enchantment);
+					}
 				}
 			}
 			else

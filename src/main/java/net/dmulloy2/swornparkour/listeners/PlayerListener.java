@@ -82,7 +82,20 @@ public class PlayerListener implements Listener
 		if (zone.getField().isInside(player.getPlayer()))
 			return;
 		
-		player.getPlayer().teleport(zone.getSpawn());
+		if (game.hasFirstCheckpoint() && !game.hasSecondCheckpoint())
+		{
+			player.getPlayer().teleport(zone.getCheckpoint1());
+		}
+		
+		else if (game.hasFirstCheckpoint() && game.hasSecondCheckpoint())
+		{
+			player.getPlayer().teleport(zone.getCheckpoint2());
+		}
+		
+		else
+		{
+			player.getPlayer().teleport(zone.getSpawn());
+		}
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR)

@@ -22,7 +22,6 @@ import org.bukkit.plugin.PluginManager;
 
 import com.earth2me.essentials.IEssentials;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
 
 /**
  * @author dmulloy2
@@ -198,9 +197,9 @@ public class ParkourGame
 					ItemStack stack = reward.getItemStack();
 					
 					List<ItemStack> redemption = new ArrayList<ItemStack>();
-					if (plugin.getParkourManager().inventoryHasRoom(player.getPlayer(), stack))
+					if (plugin.getParkourManager().inventoryHasRoom(player.getPlayer()))
 					{
-						InventoryWorkaround.addItems(player.getPlayer().getInventory(), stack);
+						player.getPlayer().getInventory().addItem(stack);
 					}
 					else
 					{
@@ -210,7 +209,7 @@ public class ParkourGame
 					if (redemption.size() > 0)
 					{
 						player.sendMessage("&eYou have until the next restart to claim the rest of your rewards!");
-						player.sendMessage("&eUse {0}!", new CmdClaim(plugin).getUsageTemplate(false));
+						player.sendMessage("&eUse {0}", new CmdClaim(plugin).getUsageTemplate(false));
 						
 						plugin.getParkourManager().redemption.put(player.getPlayer().getName(), redemption);
 					}
@@ -224,9 +223,9 @@ public class ParkourGame
 					ItemStack stack = reward.getItemStack();
 
 					List<ItemStack> redemption = new ArrayList<ItemStack>();
-					if (plugin.getParkourManager().inventoryHasRoom(player.getPlayer(), stack))
+					if (plugin.getParkourManager().inventoryHasRoom(player.getPlayer()))
 					{
-						InventoryWorkaround.addItems(player.getPlayer().getInventory(), stack);
+						player.getPlayer().getInventory().addItem(stack);
 					}
 					else
 					{
@@ -362,7 +361,7 @@ public class ParkourGame
 		PlayerInventory inv = player.getPlayer().getInventory();
 		for (ItemStack itemStack : itemContents)
 		{
-			InventoryWorkaround.addItems(player.getPlayer().getInventory(), itemStack);
+			inv.addItem(itemStack);
 		}
 		
 		for (ItemStack armor : armorContents)
