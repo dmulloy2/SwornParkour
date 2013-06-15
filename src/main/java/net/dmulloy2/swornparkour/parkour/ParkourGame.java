@@ -186,6 +186,7 @@ public class ParkourGame
 		int points = player.getPoints();
 		player.sendMessage("&eYou won with a total of &b{0} &epoints!", points);
 		
+		List<ItemStack> redemption = new ArrayList<ItemStack>();
 		for (Entry<Integer, ParkourReward> rewards : plugin.parkourRewards.entrySet())
 		{
 			int pointValue = rewards.getKey();
@@ -196,7 +197,6 @@ public class ParkourGame
 					ParkourReward reward = rewards.getValue();
 					ItemStack stack = reward.getItemStack();
 					
-					List<ItemStack> redemption = new ArrayList<ItemStack>();
 					if (plugin.getParkourManager().inventoryHasRoom(player.getPlayer()))
 					{
 						player.getPlayer().getInventory().addItem(stack);
@@ -204,14 +204,6 @@ public class ParkourGame
 					else
 					{
 						redemption.add(stack);
-					}
-					
-					if (redemption.size() > 0)
-					{
-						player.sendMessage("&eYou have until the next restart to claim the rest of your rewards!");
-						player.sendMessage("&eUse {0}", new CmdClaim(plugin).getUsageTemplate(false));
-						
-						plugin.getParkourManager().redemption.put(player.getPlayer().getName(), redemption);
 					}
 				}
 			}
@@ -222,7 +214,6 @@ public class ParkourGame
 					ParkourReward reward = rewards.getValue();
 					ItemStack stack = reward.getItemStack();
 
-					List<ItemStack> redemption = new ArrayList<ItemStack>();
 					if (plugin.getParkourManager().inventoryHasRoom(player.getPlayer()))
 					{
 						player.getPlayer().getInventory().addItem(stack);
@@ -231,16 +222,18 @@ public class ParkourGame
 					{
 						redemption.add(stack);
 					}
-					
-					if (redemption.size() > 0)
-					{
-						player.sendMessage("&eYou have until the next restart to claim the rest of your rewards!");
-						player.sendMessage("&eUse {0}!", new CmdClaim(plugin).getUsageTemplate(false));
-						
-						plugin.getParkourManager().redemption.put(player.getPlayer().getName(), redemption);
-					}
 				}
 			}
+		}
+		
+		if (redemption.size() > 0)
+		{
+			StringBuilder line = new StringBuilder();
+			line.append("&eYou have until the next restart to claim the rest of your rewards!");
+			line.append("&eUse " + new CmdClaim(plugin).getUsageTemplate(false));
+			player.sendMessage(line.toString());
+			
+			plugin.getParkourManager().redemption.put(player.getPlayer().getName(), redemption);
 		}
 		
 		if (plugin.getEconomy() != null)

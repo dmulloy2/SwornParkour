@@ -331,7 +331,8 @@ public class FileHelper
 		if (readName)
 		{
 			String str = line.substring(line.indexOf("name:") + 5);
-			displayName = FormatUtil.format(str);
+			str = FormatUtil.format(str);
+			displayName = str.replaceAll("_", " ");
 		}
 		
 		List<String> lore = new ArrayList<String>();
