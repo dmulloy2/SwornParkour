@@ -180,6 +180,17 @@ public class PlayerListener implements Listener
 		{
 			plugin.getParkourManager().getParkourGame(player).kick(ParkourKickReason.QUIT);
 		}
+		
+		for (int i=0; i<plugin.waiting.size(); i++)
+		{
+			ParkourJoinTask task = plugin.waiting.get(i);
+			if (task.player.getName().equals(player.getName()))
+			{
+				task.cancel();
+				
+				plugin.waiting.remove(task);
+			}
+		}
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR)
