@@ -48,8 +48,10 @@ public class CmdList extends SwornParkourCommand
 			line = new StringBuilder();
 			line.append("&eGame &b" + id);
 			
-			if (active) line.append("    &4[INGAME]");
-			else line.append("     &2[OPEN]");
+			if (active) line.append("    &4[INGAME]   ");
+			else line.append("     &2[OPEN]    ");
+			
+			line.append("&ePlayed: &b" + zone.getTimesPlayed());
 			
 			lines.add(line.toString());
 		}

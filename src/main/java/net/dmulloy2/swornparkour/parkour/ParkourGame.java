@@ -102,6 +102,8 @@ public class ParkourGame
 				user.setFlying(false);
 		}
 		
+		pz.setTimesPlayed(pz.getTimesPlayed() + 1);
+		
 		player.sendMessage("&eInitiation Complete, Welcome to Parkour!");
 		
 		player.sendMessage("&eThis parkour course will test your ability to jump, as well as mental dexterity and ability to find hidden objects.");

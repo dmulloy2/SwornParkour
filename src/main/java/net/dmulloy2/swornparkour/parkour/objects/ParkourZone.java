@@ -15,6 +15,7 @@ public class ParkourZone
 	private Location end;
 	private Location check1;
 	private Location check2;
+	private int timesPlayed;
 	
 	private SwornParkour plugin;
 	private int gameId;
@@ -87,5 +88,15 @@ public class ParkourZone
 	public void setCheckpoint2(Location check2)
 	{
 		this.check2 = check2;
+	}
+	
+	public int getTimesPlayed()
+	{
+		return timesPlayed;
+	}
+	
+	public void setTimesPlayed(int timesPlayed)
+	{
+		this.timesPlayed = timesPlayed;
 	}
 }

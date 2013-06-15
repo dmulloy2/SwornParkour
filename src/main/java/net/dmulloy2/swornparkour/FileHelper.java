@@ -87,6 +87,8 @@ public class FileHelper
 			fc.set(epath + "y", end.getBlockY());
 			fc.set(epath + "z", end.getBlockZ());
 			
+			fc.set("timesPlayed", pz.getTimesPlayed());
+			
 			fc.save(file);
 		}
 		catch (Exception e)
@@ -120,6 +122,8 @@ public class FileHelper
 		
 		Location end = new Location(world, fc.getInt("end.x"), fc.getInt("end.y"), fc.getInt("end.z"));
 		pz.setEnd(end);
+		
+		pz.setTimesPlayed(fc.getInt("timesPlayed"));
 		
 		plugin.loadedArenas.add(pz);
 		
