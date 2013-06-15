@@ -13,7 +13,7 @@ public class CmdVersion extends SwornParkourCommand
 		super(plugin);
 		this.name = "version";
 		this.aliases.add("v");
-		this.description = "Display SwornRPG version";
+		this.description = "Display " + plugin.getName() + " version";
 		
 		this.mustBePlayer = false;
 	}
