@@ -35,9 +35,15 @@ public class CmdJoin extends SwornParkourCommand
 		{
 			if (game.getId() == gameId)
 			{
-				err("&cThis game is already in progress!");
+				err("&cThat game is already in progress!");
 				return;
 			}
+		}
+		
+		if (getManager().isInParkour(player))
+		{
+			err("&cYou are already in a game!");
+			return;
 		}
 		
 		int teleportTimer = plugin.teleportTimer * 20;

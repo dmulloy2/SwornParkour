@@ -28,7 +28,7 @@ public class CmdAbandon extends SwornParkourCommand
 			return;
 		}
 		
-		getManager().creators.remove(player);
+		getManager().creators.remove(getManager().getParkourCreator(player));
 		
 		sendMessage("&cYou have stopped creating the arena!");
 	}

@@ -1,6 +1,5 @@
 package net.dmulloy2.swornparkour.commands;
 
-import net.dmulloy2.swornparkour.ParkourManager;
 import net.dmulloy2.swornparkour.SwornParkour;
 import net.dmulloy2.swornparkour.permissions.Permission;
 
@@ -24,13 +23,18 @@ public class CmdCreate extends SwornParkourCommand
 	@Override
 	public void perform()
 	{
-		ParkourManager manager = plugin.getParkourManager();
-		if (manager.isCreatingArena(player))
+		if (getManager().isCreatingArena(player))
 		{
 			err("&cYou are already creating an arena!");
 			return;
 		}
 		
-		manager.createNewParkourGame(player);
+		if (getManager().isInParkour(player))
+		{
+			err("&cYou cannot create an arena while ingame!");
+			return;
+		}
+		
+		getManager().createNewParkourGame(player);
 	}
 }

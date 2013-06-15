@@ -157,7 +157,7 @@ public class ParkourManager
 		{
 			if (game.getId() == gameId)
 			{
-				game.kick(ParkourKickReason.FORCE_KICK);
+				game.kick(ParkourKickReason.DISABLE);
 				parkourGames.remove(game);
 			}
 		}

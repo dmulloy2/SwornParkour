@@ -40,7 +40,7 @@ public class CmdKick extends SwornParkourCommand
 			return;
 		}
 		
-		getManager().getParkourGame(player).kick(ParkourKickReason.FORCE_KICK);
+		getManager().getParkourGame(player).kick(ParkourKickReason.FORCE);
 		
 		sendMessage("&eYou have kicked {0} from the game!", target.getName());
 	}

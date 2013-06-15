@@ -115,7 +115,7 @@ public class ParkourGame
 	
 	public void kick(ParkourKickReason reason)
 	{
-		if (reason == ParkourKickReason.TOO_MANY_DEATHS)
+		if (reason == ParkourKickReason.DEATHS)
 		{
 			player.sendMessage("&eYou have reached the max number of deaths! Sorry!");
 			
@@ -124,7 +124,7 @@ public class ParkourGame
 			endGame();
 		}
 		
-		if (reason == ParkourKickReason.FORCE_KICK)
+		if (reason == ParkourKickReason.FORCE)
 		{
 			player.sendMessage("&eYou have been kicked from the arena!");
 			
@@ -155,6 +155,15 @@ public class ParkourGame
 		if (reason == ParkourKickReason.LEAVE)
 		{
 			player.sendMessage("&eYou have left the arena!");
+			
+			returnInventory();
+			
+			endGame();
+		}
+		
+		if (reason == ParkourKickReason.DISABLE)
+		{
+			player.sendMessage("&cThis arena has been disabled!");
 			
 			returnInventory();
 			
@@ -291,7 +300,7 @@ public class ParkourGame
 		
 		if (player.getDeaths() == 3)
 		{
-			kick(ParkourKickReason.TOO_MANY_DEATHS);
+			kick(ParkourKickReason.DEATHS);
 		}
 		else
 		{
