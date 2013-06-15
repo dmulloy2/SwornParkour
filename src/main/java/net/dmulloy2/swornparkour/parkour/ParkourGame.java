@@ -230,7 +230,7 @@ public class ParkourGame
 		{
 			StringBuilder line = new StringBuilder();
 			line.append("&eYou have until the next restart to claim the rest of your rewards!");
-			line.append("&eUse " + new CmdClaim(plugin).getUsageTemplate(false));
+			line.append(" &eUse " + new CmdClaim(plugin).getUsageTemplate(false));
 			player.sendMessage(line.toString());
 			
 			plugin.getParkourManager().redemption.put(player.getPlayer().getName(), redemption);
