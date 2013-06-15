@@ -134,6 +134,7 @@ public class SwornParkour extends JavaPlugin
 		commandHandler.registerCommand(new CmdJoin(this));
 		commandHandler.registerCommand(new CmdKick(this));
 		commandHandler.registerCommand(new CmdLeave(this));
+		commandHandler.registerCommand(new CmdList(this));
 		commandHandler.registerCommand(new CmdReload(this));
 		commandHandler.registerCommand(new CmdSetPoint(this));
 		commandHandler.registerCommand(new CmdSpawn(this));

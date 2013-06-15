@@ -1,0 +1,62 @@
+package net.dmulloy2.swornparkour.commands;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.dmulloy2.swornparkour.SwornParkour;
+import net.dmulloy2.swornparkour.parkour.ParkourGame;
+import net.dmulloy2.swornparkour.parkour.objects.ParkourZone;
+
+/**
+ * @author dmulloy2
+ */
+
+public class CmdList extends SwornParkourCommand
+{
+	public CmdList(SwornParkour plugin)
+	{
+		super(plugin);
+		this.name = "list";
+		this.aliases.add("ls");
+		this.description = "List all available games";
+		
+		this.mustBePlayer = false;
+	}
+	
+	@Override
+	public void perform()
+	{
+		List<String> lines = new ArrayList<String>();
+		
+		StringBuilder line = new StringBuilder();
+		line.append("&e====[ &aAvailable Arenas &e]====");
+		lines.add(line.toString());
+		
+		for (ParkourZone zone : plugin.loadedArenas)
+		{
+			int id = zone.getId();
+			boolean active = false;
+			
+			for (ParkourGame game : getManager().parkourGames)
+			{
+				if (game.getId() == id)
+				{
+					active = true;
+				}
+			}
+			
+			line = new StringBuilder();
+			line.append("&eGame &b" + id);
+			
+			if (active) line.append("    &4[INGAME]");
+			else line.append("     &2[OPEN]");
+			
+			lines.add(line.toString());
+		}
+		
+		for (String s : lines)
+		{
+			sendMessage(s);
+		}
+	}
+}
