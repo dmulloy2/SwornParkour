@@ -138,6 +138,7 @@ public class SwornParkour extends JavaPlugin
 		commandHandler.registerCommand(new CmdReload(this));
 		commandHandler.registerCommand(new CmdSetPoint(this));
 		commandHandler.registerCommand(new CmdSpawn(this));
+		commandHandler.registerCommand(new CmdVersion(this));
 		
 		if (updateChecker)
 			new UpdateCheckThread().runTaskTimer(this, 0, 432000);
