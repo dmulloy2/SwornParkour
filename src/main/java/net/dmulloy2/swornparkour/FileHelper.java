@@ -201,7 +201,7 @@ public class FileHelper
 			fc.set("itemAmt", i);
 			
 			int a=0;
-			for (ItemStack stack : game.getSavedInventory())
+			for (ItemStack stack : game.getSavedArmor())
 			{
 				String path = "item." + a + ".";
 				fc.set(path + "type", stack.getTypeId());
