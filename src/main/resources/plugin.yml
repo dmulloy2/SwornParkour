@@ -3,7 +3,7 @@ main: net.dmulloy2.swornparkour.SwornParkour
 version: "${project.version}"
 author: dmulloy2
 softdepend: [WorldEdit, Vault, Essentials]
-description: Comprehensive Parkour plugin with configurable rewards!
+description: Comprehensive Parkour plugin that aims to revolutionize the parkour process by adding thought
 commands:
   parkour:
     description: SwornParkour root command
