@@ -25,6 +25,9 @@ public class CmdJoin extends SwornParkourCommand
 	public void perform()
 	{
 		int gameId = argAsInt(0, true);
+		if (gameId == -1)
+			return;
+		
 		if (plugin.loadedArenas.size() < gameId)
 		{
 			err("&cNo arena by that number exists!");

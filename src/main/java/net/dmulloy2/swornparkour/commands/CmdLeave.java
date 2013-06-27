@@ -25,6 +25,7 @@ public class CmdLeave extends SwornParkourCommand
 		if (!getManager().isInParkour(player))
 		{
 			err("You are not in a parkour game!");
+			return;
 		}
 		
 		getManager().getParkourGame(player).kick(ParkourKickReason.LEAVE);

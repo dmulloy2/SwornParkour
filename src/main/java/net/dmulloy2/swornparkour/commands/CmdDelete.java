@@ -25,6 +25,9 @@ public class CmdDelete extends SwornParkourCommand
 	public void perform()
 	{
 		int id = argAsInt(0, true);
+		if (id == -1)
+			return;
+		
 		if (plugin.loadedArenas.size() < id)
 		{
 			err("&cNo arena by id {0} exists!", id);
