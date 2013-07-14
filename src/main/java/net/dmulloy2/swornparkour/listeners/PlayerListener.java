@@ -7,7 +7,6 @@ import net.dmulloy2.swornparkour.parkour.objects.ParkourJoinTask;
 import net.dmulloy2.swornparkour.parkour.objects.ParkourKickReason;
 import net.dmulloy2.swornparkour.parkour.objects.ParkourPlayer;
 import net.dmulloy2.swornparkour.parkour.objects.ParkourZone;
-import net.dmulloy2.swornparkour.parkour.objects.SavedParkourPlayer;
 import net.dmulloy2.swornparkour.util.FormatUtil;
 import net.dmulloy2.swornparkour.util.Util;
 
@@ -20,7 +19,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -145,18 +143,6 @@ public class PlayerListener implements Listener
 		ParkourGame game = manager.getParkourGame(player);
 		
 		game.onDeath();
-	}
-	
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onPlayerJoin(PlayerJoinEvent event)
-	{
-		for (SavedParkourPlayer savedPlayer : plugin.savedPlayers)
-		{
-			if (savedPlayer.getName().equals(event.getPlayer().getName()))
-			{
-				plugin.getParkourManager().normalizeSavedPlayer(savedPlayer);
-			}
-		}
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR)

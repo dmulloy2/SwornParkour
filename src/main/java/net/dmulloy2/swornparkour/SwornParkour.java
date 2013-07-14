@@ -35,7 +35,6 @@ import net.dmulloy2.swornparkour.parkour.objects.*;
 import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -69,7 +68,6 @@ public class SwornParkour extends JavaPlugin
 	private @Getter String prefix = ChatColor.GOLD + "[Parkour] ";
 	
 	public List<ParkourZone> loadedArenas = new ArrayList<ParkourZone>();
-	public List<SavedParkourPlayer> savedPlayers = new ArrayList<SavedParkourPlayer>();
 	public List<ParkourJoinTask> waiting = new ArrayList<ParkourJoinTask>();
 	
 	public HashMap<Integer, ParkourReward> parkourRewards = new HashMap<Integer, ParkourReward>();
@@ -104,18 +102,6 @@ public class SwornParkour extends JavaPlugin
 		
 		loadGames();
 		
-		savedPlayers = fileHelper.loadSavedPlayers();
-		for (Player player : getServer().getOnlinePlayers())
-		{
-			for (SavedParkourPlayer savedParkourPlayer : savedPlayers)
-			{
-				if (savedParkourPlayer.getName().equals(player.getName()))
-				{
-					parkourManager.normalizeSavedPlayer(savedParkourPlayer);
-				}
-			}
-		}
-		
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new PlayerListener(this), this);
 		pm.registerEvents(new BlockListener(this), this);
@@ -124,7 +110,6 @@ public class SwornParkour extends JavaPlugin
 		setupVault(pm);
 		
 		/**Register Commands**/
-		getCommand("parkour").setExecutor(commandHandler);
 		commandHandler.setCommandPrefix("parkour");
 		commandHandler.registerCommand(new CmdAbandon(this));
 		commandHandler.registerCommand(new CmdClaim(this));
@@ -151,10 +136,25 @@ public class SwornParkour extends JavaPlugin
 	private void createDirectories()
 	{
 		File games = new File(getDataFolder(), "games");
-		if (!games.exists()) games.mkdir();
+		if (!games.exists()) 
+		{
+			games.mkdir();
+		}
 			
 		File players = new File(getDataFolder(), "players");
-		if (!players.exists()) players.mkdir();
+		if (players.exists())
+		{
+			File[] children = players.listFiles();
+			if (children != null && children.length > 0)
+			{
+				for (File child : children)
+				{
+					child.delete();
+				}
+			}
+			
+			players.delete();
+		}
 	}
 
 	@Override
@@ -270,6 +270,7 @@ public class SwornParkour extends JavaPlugin
 				return zone;
 			}
 		}
+		
 		return null;
 	}
 	
@@ -335,7 +336,6 @@ public class SwornParkour extends JavaPlugin
 		
 		parkourRewards.clear();
 		loadedArenas.clear();
-		savedPlayers.clear();
 		waiting.clear();
 	}
 	

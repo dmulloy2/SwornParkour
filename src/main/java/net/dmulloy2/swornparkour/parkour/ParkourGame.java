@@ -135,20 +135,19 @@ public class ParkourGame
 		if (reason == ParkourKickReason.SHUTDOWN)
 		{
 			player.sendMessage("&eThe server is shutting down!");
-			plugin.getFileHelper().savePlayer(player, true);
-
-			plugin.getParkourManager().parkourGames.remove(this);
+			
+			returnInventory();
+			
+			endGame();
 		}
 		
 		if (reason == ParkourKickReason.QUIT)
 		{
 			plugin.outConsole("Player {0} leaving game {1} from quit!", player.getPlayer().getName(), gameId);
 			
-			plugin.getFileHelper().savePlayer(player, false);
+			returnInventory();
 			
-			plugin.getServer().broadcastMessage(FormatUtil.format("&eParkour Game &b{0} &ehas completed!", getId()));
-			
-			plugin.getParkourManager().parkourGames.remove(this);
+			endGame();
 		}
 		
 		if (reason == ParkourKickReason.LEAVE)

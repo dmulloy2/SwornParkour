@@ -9,11 +9,7 @@ import net.dmulloy2.swornparkour.parkour.objects.ParkourCreator;
 import net.dmulloy2.swornparkour.parkour.objects.ParkourKickReason;
 import net.dmulloy2.swornparkour.parkour.objects.ParkourPlayer;
 import net.dmulloy2.swornparkour.parkour.objects.ParkourZone;
-import net.dmulloy2.swornparkour.parkour.objects.SavedParkourPlayer;
-import net.dmulloy2.swornparkour.util.InventoryWorkaround;
-import net.dmulloy2.swornparkour.util.Util;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -28,8 +24,8 @@ public class ParkourManager
 	public List<ParkourCreator> creators = new ArrayList<ParkourCreator>();
 	public HashMap<String, List<ItemStack>> redemption = new HashMap<String, List<ItemStack>>();
 	
-	public SwornParkour plugin;
-	public ParkourManager(SwornParkour plugin)
+	private final SwornParkour plugin;
+	public ParkourManager(final SwornParkour plugin)
 	{
 		this.plugin = plugin;
 	}
@@ -65,10 +61,9 @@ public class ParkourManager
 		for (ParkourGame parkourGame : parkourGames)
 		{
 			if (parkourGame.getParkourPlayer().getPlayer().getName().equals(player.getName()))
-			{
 				return true;
-			}
 		}
+		
 		return false;
 	}
 	
@@ -78,10 +73,9 @@ public class ParkourManager
 		{
 			ParkourPlayer parkourPlayer = parkourGame.getParkourPlayer();
 			if (parkourPlayer.getPlayer().getName().equals(player.getName()))
-			{
 				return parkourPlayer;
-			}
 		}
+		
 		return null;
 	}
 	
@@ -98,10 +92,9 @@ public class ParkourManager
 		for (ParkourCreator creator : creators)
 		{
 			if (creator.player.getName().equals(player.getName()))
-			{
 				return creator;
-			}
 		}
+		
 		return null;
 	}
 	
@@ -110,19 +103,17 @@ public class ParkourManager
 		for (ParkourCreator creator : creators)
 		{
 			if (creator.player.getName().equals(player.getName()))
-			{
 				return true;
-			}
 		}
+		
 		return false;
 	}
 	
 	public ParkourGame getParkourGame(Player player)
 	{
 		if (getParkourPlayer(player) != null)
-		{
 			return getParkourGame(getParkourPlayer(player));
-		}
+		
 		return null;
 	}
 	
@@ -131,10 +122,9 @@ public class ParkourManager
 		for (ParkourGame game : parkourGames)
 		{
 			if (game.getParkourPlayer() == player)
-			{
 				return game;
-			}
 		}
+		
 		return null;
 	}
 	
@@ -164,49 +154,6 @@ public class ParkourManager
 		plugin.loadedArenas.remove(plugin.getParkourZone(gameId));
 		
 		return (plugin.getFileHelper().deleteFile(gameId));
-	}
-	
-	public void normalizeSavedPlayer(SavedParkourPlayer savedPlayer)
-	{
-		String name = savedPlayer.getName();
-		Location spawnback = savedPlayer.getSpawnBack();
-		List<ItemStack> itemContents = savedPlayer.getItems();
-		List<ItemStack> armorContents = savedPlayer.getArmor();
-		
-		Player player = Util.matchPlayer(name);
-		PlayerInventory inv = player.getInventory();
-		for (ItemStack itemStack : itemContents)
-		{
-			InventoryWorkaround.addItems(inv, itemStack);
-		}
-		
-		for (ItemStack armor : armorContents)
-		{
-			String type = armor.getType().toString().toLowerCase();
-			if (type.contains("helmet"))
-			{
-				inv.setHelmet(armor);
-			}
-			
-			if (type.contains("chestplate"))
-			{
-				inv.setChestplate(armor);
-			}
-			
-			if (type.contains("leggings"))
-			{
-				inv.setLeggings(armor);
-			}
-			
-			if (type.contains("boots"))
-			{
-				inv.setBoots(armor);
-			}
-		}
-		
-		player.teleport(spawnback);
-		
-		plugin.getFileHelper().deleteSavedPlayer(name);
 	}
 	
 	public boolean inventoryHasRoom(Player player)
