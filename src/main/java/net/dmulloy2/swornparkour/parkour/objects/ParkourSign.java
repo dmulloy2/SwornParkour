@@ -58,6 +58,8 @@ public class ParkourSign
 			{
 				s.setLine(3, "AVAILABLE");
 			}
+			
+			s.update();
 		}
 		else
 		{

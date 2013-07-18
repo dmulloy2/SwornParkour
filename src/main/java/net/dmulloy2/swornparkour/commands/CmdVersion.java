@@ -34,6 +34,6 @@ public class CmdVersion extends SwornParkourCommand
 		
 		sendMessage("&bVersion: &e{0}", plugin.getDescription().getFullName());
 		sendMessage("&bUpdate Available: &e{0}", plugin.updateNeeded() ? "true" : "false");
-		sendMessage("&bDownload:&e http://dev.bukkit.org/bukkit-mods/swornparkour/");
+		sendMessage("&bDownload:&e http://dev.bukkit.org/bukkit-plugins/swornparkour/");
 	}
 }

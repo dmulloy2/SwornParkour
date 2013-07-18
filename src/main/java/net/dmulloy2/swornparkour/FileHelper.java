@@ -260,7 +260,7 @@ public class FileHelper
 		
 		for (ParkourSign sign : plugin.signs)
 		{
-			String path = "signs." + sign.getId();
+			String path = "signs." + sign.getId() + ".";
 
 			Location loc = sign.getLocation();
 			
@@ -294,7 +294,7 @@ public class FileHelper
 		
 		for (int i = 0; i < fc.getInt("total"); i++)
 		{
-			String path = "signs." + i;
+			String path = "signs." + i + ".";
 			if (fc.isSet(path))
 			{
 				World world = plugin.getServer().getWorld(fc.getString(path + "world"));
