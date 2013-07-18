@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.dmulloy2</groupId>
   <artifactId>swornparkour</artifactId>
-  <version>1.1</version>
+  <version>1.2</version>
   <name>SwornParkour</name>
   
   <repositories>

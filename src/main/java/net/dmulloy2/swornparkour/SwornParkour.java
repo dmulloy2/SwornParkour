@@ -32,9 +32,11 @@ import net.dmulloy2.swornparkour.commands.*;
 import net.dmulloy2.swornparkour.handlers.*;
 import net.dmulloy2.swornparkour.listeners.*;
 import net.dmulloy2.swornparkour.parkour.objects.*;
+import net.dmulloy2.swornparkour.util.Util;
 import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -67,6 +69,7 @@ public class SwornParkour extends JavaPlugin
 	
 	private @Getter String prefix = ChatColor.GOLD + "[Parkour] ";
 	
+	public List<ParkourSign> signs = new ArrayList<ParkourSign>();
 	public List<ParkourZone> loadedArenas = new ArrayList<ParkourZone>();
 	public List<ParkourJoinTask> waiting = new ArrayList<ParkourJoinTask>();
 	
@@ -101,6 +104,8 @@ public class SwornParkour extends JavaPlugin
 		createDirectories();
 		
 		loadGames();
+		
+		fileHelper.loadSigns();
 		
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new PlayerListener(this), this);
@@ -187,6 +192,28 @@ public class SwornParkour extends JavaPlugin
 		}
 	}
 	
+	public void updateSigns(int gameId)
+	{
+		for (ParkourSign sign : signs)
+		{
+			if (sign.getZone().getId() == gameId)
+			{
+				sign.update();
+			}
+		}
+	}
+	
+	public ParkourSign getParkourSign(Location loc)
+	{
+		for (ParkourSign sign : signs)
+		{
+			if (Util.checkLocation(sign.getLocation(), loc))
+				return sign;
+		}
+		
+		return null;
+	}
+	
 	public void loadConfig()
 	{
 		teleportTimer = getConfig().getInt("teleport-timer");
@@ -216,6 +243,11 @@ public class SwornParkour extends JavaPlugin
 	{
 		logHandler.log(level, string, objects);
 	}
+	
+	public void debug(String string, Object... objects)
+	{
+		if (debug) outConsole("[Debug] " + string, objects);
+	}
 
 	/**Messages**/
 	public String getMessage(String string)
@@ -227,7 +259,7 @@ public class SwornParkour extends JavaPlugin
 		}
 		catch (MissingResourceException ex) 
 		{
-			logHandler.log(Level.WARNING, "Messages locale is missing key for: {0}", string);
+			outConsole(Level.WARNING, "Messages locale is missing key for: {0}", string);
 			return null;
 		}
 	}
@@ -300,7 +332,7 @@ public class SwornParkour extends JavaPlugin
 
     public double updateCheck(double currentVersion)
     {
-        String pluginUrlString = "http://dev.bukkit.org/bukkit-mods/swornparkour/files.rss";
+        String pluginUrlString = "http://dev.bukkit.org/bukkit-plugins/swornparkour/files.rss";
         try
         {
             URL url = new URL(pluginUrlString);
@@ -319,7 +351,7 @@ public class SwornParkour extends JavaPlugin
         }
         catch (Exception e) 
         {
-        	if (debug) outConsole(Level.SEVERE, getMessage("log_update_error"), e.getMessage());
+        	debug(getMessage("log_update_error"), e.getMessage());
         }
         
         return currentVersion;
@@ -339,6 +371,13 @@ public class SwornParkour extends JavaPlugin
 		waiting.clear();
 	}
 	
+	public void removeSign(ParkourSign sign)
+	{
+		signs.remove(sign);
+		fileHelper.updateSignSave();
+	}
+	
+	
 	public class UpdateCheckThread extends BukkitRunnable
 	{
 		@Override
@@ -355,7 +394,7 @@ public class SwornParkour extends JavaPlugin
 			} 
 			catch (Exception e) 
 			{
-				if (debug) outConsole(Level.SEVERE, getMessage("log_update_error"), e.getMessage());
+				debug(getMessage("log_update_error"), e.getMessage());
 			}
 		}
 	}

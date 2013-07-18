@@ -2,13 +2,15 @@ package net.dmulloy2.swornparkour;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 
-import net.dmulloy2.swornparkour.parkour.objects.CompositeEnchantment;
 import net.dmulloy2.swornparkour.parkour.objects.EnchantmentType;
 import net.dmulloy2.swornparkour.parkour.objects.ParkourField;
 import net.dmulloy2.swornparkour.parkour.objects.ParkourReward;
+import net.dmulloy2.swornparkour.parkour.objects.ParkourSign;
 import net.dmulloy2.swornparkour.parkour.objects.ParkourZone;
 import net.dmulloy2.swornparkour.util.FormatUtil;
 
@@ -147,7 +149,7 @@ public class FileHelper
 		
 		amt = Integer.parseInt(split[1]);
 		
-		List<CompositeEnchantment> enchantments = new ArrayList<CompositeEnchantment>();
+		Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
 		if (readEnchants)
 		{
 			String str = line.substring(line.indexOf("enchants:") + 9);
@@ -173,8 +175,7 @@ public class FileHelper
 					
 					if (enchant != null && level > 0)
 					{
-						CompositeEnchantment enchantment = new CompositeEnchantment(enchant, level);
-						enchantments.add(enchantment);
+						enchantments.put(enchant, level);
 					}
 				}
 			}
@@ -184,8 +185,7 @@ public class FileHelper
 				Enchantment enchant = EnchantmentType.toEnchantment(split2[0]);
 				int level = Integer.parseInt(split2[1]);
 				
-				CompositeEnchantment enchantment = new CompositeEnchantment(enchant, level);
-				enchantments.add(enchantment);
+				enchantments.put(enchant, level);
 			}
 		}
 		
@@ -236,5 +236,82 @@ public class FileHelper
 		}
 		
 		return true;
+	}
+	
+	public void updateSignSave()
+	{
+		File file = new File(plugin.getDataFolder(), "signs.yml");
+		if (file.exists())
+		{
+			file.delete();
+		}
+		
+		try 
+		{ 
+			file.createNewFile();
+		}
+		catch (Exception e) 
+		{
+			plugin.outConsole(Level.SEVERE, "Could not update sign save: {0}", e.getMessage());
+			return;
+		}
+		
+		YamlConfiguration fc = YamlConfiguration.loadConfiguration(file);
+		
+		for (ParkourSign sign : plugin.signs)
+		{
+			String path = "signs." + sign.getId();
+
+			Location loc = sign.getLocation();
+			
+			fc.set(path + "gameId", sign.getZone().getId());
+			
+			fc.set(path + "world", loc.getWorld().getName());
+			fc.set(path + "x", loc.getBlockX());
+			fc.set(path + "y", loc.getBlockY());
+			fc.set(path + "z", loc.getBlockZ());
+		}
+		
+		fc.set("total", plugin.signs.size());
+		
+		try 
+		{ 
+			fc.save(file);
+		}
+		catch (Exception e) 
+		{
+			plugin.outConsole(Level.SEVERE, "Could not update sign save: {0}", e.getMessage());
+			return;
+		}
+	}
+	
+	public void loadSigns()
+	{
+		File file = new File(plugin.getDataFolder(), "signs.yml");
+		if (! file.exists()) return;
+		
+		YamlConfiguration fc = YamlConfiguration.loadConfiguration(file);
+		
+		for (int i = 0; i < fc.getInt("total"); i++)
+		{
+			String path = "signs." + i;
+			if (fc.isSet(path))
+			{
+				World world = plugin.getServer().getWorld(fc.getString(path + "world"));
+				if (world != null)
+				{
+					Location loc = new Location(world, fc.getInt(path + "x"), fc.getInt(path + "y"), fc.getInt(path + "z"));
+					if (loc != null)
+					{
+						ParkourZone zone = plugin.getParkourZone(fc.getInt(path + "gameId"));
+						if (zone != null)
+						{
+							ParkourSign sign = new ParkourSign(plugin, loc, zone, i);
+							plugin.signs.add(sign);
+						}
+					}
+				}
+			}
+		}
 	}
 }

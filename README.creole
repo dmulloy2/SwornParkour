@@ -12,7 +12,8 @@
 ----
 
 ==Development Builds
-** Development Builds can be found at our continuous integration server. These builds are not approved by the BukkitDev staff and are to be used at your own risk. http://jenkins.minesworn.com/job/SwornParkour/ **
+** Development Builds can be found at our continuous integration server. These builds are not approved by the BukkitDev staff and are to be used at your own risk. **
+** http://ci.minesworn.com/job/SwornParkour/ **
 ----
 
 ==Installation

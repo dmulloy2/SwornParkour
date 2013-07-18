@@ -13,10 +13,12 @@ import net.dmulloy2.swornparkour.util.Util;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerKickEvent;
@@ -29,8 +31,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerListener implements Listener
 {
-	public SwornParkour plugin;
-	public PlayerListener(SwornParkour plugin)
+	private final SwornParkour plugin;
+	public PlayerListener(final SwornParkour plugin)
 	{
 		this.plugin = plugin;
 	}
@@ -192,6 +194,58 @@ public class PlayerListener implements Listener
 				plugin.waiting.remove(task);
 				
 				event.getPlayer().sendMessage(FormatUtil.format("&cCancelled!"));
+			}
+		}
+	}
+	
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	public void onSignInteract(PlayerInteractEvent event)
+	{
+		Player player = event.getPlayer();
+		Action action = event.getAction();
+		if (action.equals(Action.RIGHT_CLICK_BLOCK))
+		{
+			if (event.hasBlock()) 
+			{
+				Block block = event.getClickedBlock();
+				if (block.getState() instanceof Sign) 
+				{
+					Sign s = (Sign)block.getState();
+					if (s.getLine(0).equalsIgnoreCase("[SwornParkour]"))
+					{
+						if (s.getLine(1).equalsIgnoreCase("Click to join"))
+						{
+							int gameId = Integer.parseInt(s.getLine(2).replaceAll("Game ", ""));
+							
+							if (plugin.loadedArenas.size() < gameId)
+							{
+								player.sendMessage(FormatUtil.format("&cNo arena by that number exists!"));
+								return;
+							}
+							
+							for (ParkourGame game : plugin.getParkourManager().parkourGames)
+							{
+								if (game.getId() == gameId)
+								{
+									player.sendMessage(FormatUtil.format("&cThat game is already in progress!"));
+									return;
+								}
+							}
+							
+							if (plugin.getParkourManager().isInParkour(player))
+							{
+								player.sendMessage(FormatUtil.format("&cYou are already in a game!"));
+								return;
+							}
+							
+							int teleportTimer = plugin.teleportTimer * 20;
+							
+							player.sendMessage(FormatUtil.format("&ePlease stand still for {0} seconds!", plugin.teleportTimer));
+							
+							new ParkourJoinTask(plugin, player, gameId).runTaskLater(plugin, teleportTimer);
+						}
+					}
+				}
 			}
 		}
 	}

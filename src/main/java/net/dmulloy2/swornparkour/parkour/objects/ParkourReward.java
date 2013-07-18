@@ -1,6 +1,8 @@
 package net.dmulloy2.swornparkour.parkour.objects;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -16,11 +18,11 @@ public class ParkourReward
 	private int itemId;
 	private byte data;
 	private int amount;
-	private List<CompositeEnchantment> enchantments;
+	private Map<Enchantment, Integer> enchantments;
 	private String displayName;
 	private List<String> lore;
 	
-	public ParkourReward(int itemId, byte data, int amount, List<CompositeEnchantment> enchantments, String displayName, List<String> lore)
+	public ParkourReward(int itemId, byte data, int amount, Map<Enchantment, Integer> enchantments, String displayName, List<String> lore)
 	{
 		this.itemId = itemId;
 		this.data = data;
@@ -42,12 +44,15 @@ public class ParkourReward
 		
 		if (enchantments.size() > 0)
 		{
-			for (CompositeEnchantment enchantment : enchantments)
+			for (Entry<Enchantment, Integer> enchantment : enchantments.entrySet())
 			{
-				Enchantment enchant = enchantment.getType();
-				int level = enchantment.getLevel();
+				Enchantment ench = enchantment.getKey();
+				int level = enchantment.getValue();
 				
-				stack.addUnsafeEnchantment(enchant, level);
+				if (ench != null && level > 0)
+				{
+					stack.addUnsafeEnchantment(ench, level);
+				}
 			}
 		}
 		

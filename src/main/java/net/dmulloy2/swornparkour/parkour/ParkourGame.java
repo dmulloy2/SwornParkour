@@ -39,8 +39,8 @@ public class ParkourGame
 	private boolean secondCheckpoint = false;
 	
 	private ParkourPlayer player;
-	public SwornParkour plugin;
-	public ParkourGame(SwornParkour plugin, ParkourPlayer player, ParkourZone zone, int gameId)
+	private final SwornParkour plugin;
+	public ParkourGame(final SwornParkour plugin, ParkourPlayer player, ParkourZone zone, int gameId)
 	{
 		this.plugin = plugin;
 		this.player = player;
@@ -110,6 +110,8 @@ public class ParkourGame
 		player.sendMessage("&eIf at any time, this course becomes too dificult for your mind to bear, /parkour leave is always there!");
 		
 		player.sendMessage("&eWhen you are ready to begin, simply walk forward and begin!");
+		
+		plugin.updateSigns(gameId);
 	}
 	
 	public void kick(ParkourKickReason reason)
@@ -253,6 +255,8 @@ public class ParkourGame
 		plugin.getServer().broadcastMessage(FormatUtil.format("&eParkour Game &b{0} &ehas completed!", getId()));
 		
 		plugin.getParkourManager().parkourGames.remove(this);
+		
+		plugin.updateSigns(gameId);
 	}
 	
 	public void saveInventory()
