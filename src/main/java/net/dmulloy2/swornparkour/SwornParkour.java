@@ -28,10 +28,29 @@ import java.util.logging.Level;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import lombok.Getter;
-import net.dmulloy2.swornparkour.commands.*;
-import net.dmulloy2.swornparkour.handlers.*;
-import net.dmulloy2.swornparkour.listeners.*;
-import net.dmulloy2.swornparkour.parkour.objects.*;
+import net.dmulloy2.swornparkour.commands.CmdAbandon;
+import net.dmulloy2.swornparkour.commands.CmdClaim;
+import net.dmulloy2.swornparkour.commands.CmdCreate;
+import net.dmulloy2.swornparkour.commands.CmdDelete;
+import net.dmulloy2.swornparkour.commands.CmdHelp;
+import net.dmulloy2.swornparkour.commands.CmdJoin;
+import net.dmulloy2.swornparkour.commands.CmdKick;
+import net.dmulloy2.swornparkour.commands.CmdLeave;
+import net.dmulloy2.swornparkour.commands.CmdList;
+import net.dmulloy2.swornparkour.commands.CmdReload;
+import net.dmulloy2.swornparkour.commands.CmdSetPoint;
+import net.dmulloy2.swornparkour.commands.CmdSpawn;
+import net.dmulloy2.swornparkour.commands.CmdVersion;
+import net.dmulloy2.swornparkour.handlers.CommandHandler;
+import net.dmulloy2.swornparkour.handlers.LogHandler;
+import net.dmulloy2.swornparkour.handlers.PermissionHandler;
+import net.dmulloy2.swornparkour.handlers.ResourceHandler;
+import net.dmulloy2.swornparkour.listeners.BlockListener;
+import net.dmulloy2.swornparkour.listeners.PlayerListener;
+import net.dmulloy2.swornparkour.parkour.objects.ParkourJoinTask;
+import net.dmulloy2.swornparkour.parkour.objects.ParkourReward;
+import net.dmulloy2.swornparkour.parkour.objects.ParkourSign;
+import net.dmulloy2.swornparkour.parkour.objects.ParkourZone;
 import net.dmulloy2.swornparkour.util.Util;
 import net.milkbowl.vault.economy.Economy;
 
@@ -324,7 +343,7 @@ public class SwornParkour extends JavaPlugin
 		RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(Economy.class);
 		if (economyProvider != null) 
 		{
-			economy = ((Economy)economyProvider.getProvider());
+			economy = (economyProvider.getProvider());
 		}
  
 		return economy != null;

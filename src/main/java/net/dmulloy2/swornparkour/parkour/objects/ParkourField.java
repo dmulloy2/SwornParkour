@@ -1,10 +1,10 @@
 package net.dmulloy2.swornparkour.parkour.objects;
 
+import lombok.Getter;
+
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-
-import lombok.Getter;
 
 /**
  * @author dmulloy2

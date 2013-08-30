@@ -14,7 +14,6 @@ import net.dmulloy2.swornparkour.util.FormatUtil;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
@@ -32,9 +31,10 @@ public class ParkourGame
 	private ParkourZone pz;
 	private int gameId;
 	private int checkpoint = 0;
-	private List<ItemStack> itemContents = new ArrayList<ItemStack>();
-	private List<ItemStack> armorContents = new ArrayList<ItemStack>();
 	
+	private ItemStack[] itemContents;
+	private ItemStack[] armorContents;
+
 	private boolean firstCheckpoint = false;
 	private boolean secondCheckpoint = false;
 	
@@ -62,17 +62,7 @@ public class ParkourGame
 	{
 		return gameId;
 	}
-	
-	public List<ItemStack> getSavedInventory()
-	{
-		return itemContents;
-	}
-	
-	public List<ItemStack> getSavedArmor()
-	{
-		return armorContents;
-	}
-	
+
 	public void join()
 	{
 		player.sendMessage("&eCommencing Initiation...");
@@ -262,26 +252,15 @@ public class ParkourGame
 	public void saveInventory()
 	{
 		PlayerInventory inv = player.getPlayer().getInventory();
-		for (ItemStack itemStack : inv.getContents())
-		{
-			if (itemStack != null && itemStack.getType() != Material.AIR)
-			{
-				itemContents.add(itemStack);
-			}
-		}
-		
-		for (ItemStack armor : inv.getArmorContents())
-		{
-			if (armor != null && armor.getType() != Material.AIR)
-			{
-				armorContents.add(armor);
-			}
-		}
+
+		this.itemContents = inv.getContents();
+		this.armorContents = inv.getArmorContents();
 	}
 	
 	public void clearInventory()
 	{
 		PlayerInventory inv = player.getPlayer().getInventory();
+		
 		inv.setHelmet(null);
 		inv.setChestplate(null);
 		inv.setLeggings(null);
@@ -355,33 +334,8 @@ public class ParkourGame
 	public void returnInventory()
 	{
 		PlayerInventory inv = player.getPlayer().getInventory();
-		for (ItemStack itemStack : itemContents)
-		{
-			inv.addItem(itemStack);
-		}
-		
-		for (ItemStack armor : armorContents)
-		{
-			String type = armor.getType().toString().toLowerCase();
-			if (type.contains("helmet"))
-			{
-				inv.setHelmet(armor);
-			}
-				
-			if (type.contains("chestplate"))
-			{
-				inv.setChestplate(armor);
-			}
-				
-			if (type.contains("leggings"))
-			{
-				inv.setLeggings(armor);
-			}
-				
-			if (type.contains("boots"))
-			{
-				inv.setBoots(armor);
-			}
-		}
+
+		inv.setContents(itemContents);
+		inv.setArmorContents(armorContents);
 	}
 }

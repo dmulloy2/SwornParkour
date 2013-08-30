@@ -3,14 +3,14 @@ package net.dmulloy2.swornparkour.commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import net.dmulloy2.swornparkour.ParkourManager;
 import net.dmulloy2.swornparkour.SwornParkour;
 import net.dmulloy2.swornparkour.permissions.Permission;
 import net.dmulloy2.swornparkour.util.FormatUtil;
+
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 /**
  * @author dmulloy2

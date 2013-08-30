@@ -20,6 +20,7 @@ public abstract class PaginatedCommand extends SwornParkourCommand
 	
 	int pageArgIndex = 0;
 	
+	@Override
 	public void perform()
 	{
 		int index = 1;

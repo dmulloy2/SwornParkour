@@ -1,10 +1,10 @@
 package net.dmulloy2.swornparkour.commands;
 
-import org.bukkit.Location;
-
 import net.dmulloy2.swornparkour.SwornParkour;
 import net.dmulloy2.swornparkour.parkour.objects.ParkourZone;
 import net.dmulloy2.swornparkour.permissions.Permission;
+
+import org.bukkit.Location;
 
 public class CmdSpawn extends SwornParkourCommand
 {
