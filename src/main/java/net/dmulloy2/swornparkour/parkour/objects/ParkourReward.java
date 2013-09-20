@@ -32,6 +32,7 @@ public class ParkourReward
 		this.lore = lore;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public ItemStack getItemStack()
 	{
 		ItemStack stack = new ItemStack(itemId, amount);
