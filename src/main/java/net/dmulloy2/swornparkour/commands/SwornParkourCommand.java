@@ -3,9 +3,9 @@ package net.dmulloy2.swornparkour.commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.dmulloy2.swornparkour.ParkourManager;
 import net.dmulloy2.swornparkour.SwornParkour;
-import net.dmulloy2.swornparkour.permissions.Permission;
+import net.dmulloy2.swornparkour.handlers.ParkourHandler;
+import net.dmulloy2.swornparkour.types.Permission;
 import net.dmulloy2.swornparkour.util.FormatUtil;
 
 import org.bukkit.ChatColor;
@@ -111,9 +111,9 @@ public abstract class SwornParkourCommand
 		return plugin.getMessage(msg);
 	}
 	
-	protected final ParkourManager getManager()
+	protected final ParkourHandler getManager()
 	{
-		return plugin.getParkourManager();
+		return plugin.getParkourHandler();
 	}
 
 	public final String getName() 

@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 
 import net.dmulloy2.swornparkour.SwornParkour;
-import net.dmulloy2.swornparkour.util.FileResourceLoader;
+import net.dmulloy2.swornparkour.io.FileResourceLoader;
 
 /**
  * @author dmulloy2

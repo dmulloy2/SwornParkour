@@ -1,7 +1,7 @@
 package net.dmulloy2.swornparkour.commands;
 
 import net.dmulloy2.swornparkour.SwornParkour;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourKickReason;
+import net.dmulloy2.swornparkour.types.ParkourKickReason;
 
 /**
  * @author dmulloy2

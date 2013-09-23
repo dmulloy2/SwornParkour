@@ -1,8 +1,8 @@
 package net.dmulloy2.swornparkour.commands;
 
 import net.dmulloy2.swornparkour.SwornParkour;
-import net.dmulloy2.swornparkour.parkour.ParkourGame;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourJoinTask;
+import net.dmulloy2.swornparkour.tasks.ParkourJoinTask;
+import net.dmulloy2.swornparkour.types.ParkourGame;
 
 /**
  * @author dmulloy2

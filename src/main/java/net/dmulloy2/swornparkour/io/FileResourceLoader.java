@@ -1,4 +1,4 @@
-package net.dmulloy2.swornparkour.util;
+package net.dmulloy2.swornparkour.io;
 
 import java.io.File;
 import java.io.FileInputStream;

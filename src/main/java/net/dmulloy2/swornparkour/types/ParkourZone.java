@@ -1,4 +1,4 @@
-package net.dmulloy2.swornparkour.parkour.objects;
+package net.dmulloy2.swornparkour.types;
 
 import net.dmulloy2.swornparkour.SwornParkour;
 

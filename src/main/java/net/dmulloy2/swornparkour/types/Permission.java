@@ -1,4 +1,4 @@
-package net.dmulloy2.swornparkour.permissions;
+package net.dmulloy2.swornparkour.types;
 
 /**
  * @author dmulloy2

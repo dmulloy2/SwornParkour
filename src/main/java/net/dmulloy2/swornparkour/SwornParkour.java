@@ -43,14 +43,16 @@ import net.dmulloy2.swornparkour.commands.CmdSpawn;
 import net.dmulloy2.swornparkour.commands.CmdVersion;
 import net.dmulloy2.swornparkour.handlers.CommandHandler;
 import net.dmulloy2.swornparkour.handlers.LogHandler;
+import net.dmulloy2.swornparkour.handlers.ParkourHandler;
 import net.dmulloy2.swornparkour.handlers.PermissionHandler;
 import net.dmulloy2.swornparkour.handlers.ResourceHandler;
+import net.dmulloy2.swornparkour.io.FileHelper;
 import net.dmulloy2.swornparkour.listeners.BlockListener;
 import net.dmulloy2.swornparkour.listeners.PlayerListener;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourJoinTask;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourReward;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourSign;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourZone;
+import net.dmulloy2.swornparkour.tasks.ParkourJoinTask;
+import net.dmulloy2.swornparkour.types.ParkourReward;
+import net.dmulloy2.swornparkour.types.ParkourSign;
+import net.dmulloy2.swornparkour.types.ParkourZone;
 import net.dmulloy2.swornparkour.util.Util;
 import net.milkbowl.vault.economy.Economy;
 
@@ -80,7 +82,7 @@ public class SwornParkour extends JavaPlugin
 	private @Getter CommandHandler commandHandler;
 	private @Getter ResourceHandler resourceHandler;
 	
-	private @Getter ParkourManager parkourManager;
+	private @Getter ParkourHandler parkourHandler;
 	private @Getter FileHelper fileHelper;
 	
 	private @Getter WorldEditPlugin worldEdit;
@@ -110,7 +112,7 @@ public class SwornParkour extends JavaPlugin
 		saveResource("messages.properties", true);
 		resourceHandler = new ResourceHandler(this, this.getClassLoader());
 		
-		parkourManager = new ParkourManager(this);
+		parkourHandler = new ParkourHandler(this);
 		fileHelper = new FileHelper(this);
 		
 		currentVersion = Double.valueOf(getDescription().getVersion().replaceFirst("\\.", ""));
@@ -150,7 +152,7 @@ public class SwornParkour extends JavaPlugin
 		commandHandler.registerCommand(new CmdVersion(this));
 		
 		if (updateChecker)
-			new UpdateCheckThread().runTaskTimer(this, 0, 432000);
+			new UpdateCheckTask().runTaskTimer(this, 0, 432000);
 
 		long finish = System.currentTimeMillis();
 		
@@ -383,7 +385,7 @@ public class SwornParkour extends JavaPlugin
 	
 	private void clearMemory()
 	{
-		parkourManager.onShutdown();
+		parkourHandler.onShutdown();
 		
 		parkourRewards.clear();
 		loadedArenas.clear();
@@ -397,7 +399,7 @@ public class SwornParkour extends JavaPlugin
 	}
 	
 	
-	public class UpdateCheckThread extends BukkitRunnable
+	public class UpdateCheckTask extends BukkitRunnable
 	{
 		@Override
 		public void run()

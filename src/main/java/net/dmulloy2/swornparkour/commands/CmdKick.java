@@ -1,8 +1,8 @@
 package net.dmulloy2.swornparkour.commands;
 
 import net.dmulloy2.swornparkour.SwornParkour;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourKickReason;
-import net.dmulloy2.swornparkour.permissions.Permission;
+import net.dmulloy2.swornparkour.types.ParkourKickReason;
+import net.dmulloy2.swornparkour.types.Permission;
 import net.dmulloy2.swornparkour.util.Util;
 
 import org.bukkit.entity.Player;

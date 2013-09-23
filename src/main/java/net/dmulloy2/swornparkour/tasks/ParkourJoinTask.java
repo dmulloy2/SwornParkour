@@ -1,4 +1,4 @@
-package net.dmulloy2.swornparkour.parkour.objects;
+package net.dmulloy2.swornparkour.tasks;
 
 import net.dmulloy2.swornparkour.SwornParkour;
 
@@ -27,7 +27,7 @@ public class ParkourJoinTask extends BukkitRunnable
 	public void run()
 	{
 		plugin.waiting.remove(this);
-		plugin.getParkourManager().joinParkour(player, gameId);
+		plugin.getParkourHandler().joinParkour(player, gameId);
 		this.cancel();
 	}
 }

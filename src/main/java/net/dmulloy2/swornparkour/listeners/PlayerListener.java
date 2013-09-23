@@ -1,12 +1,12 @@
 package net.dmulloy2.swornparkour.listeners;
 
-import net.dmulloy2.swornparkour.ParkourManager;
 import net.dmulloy2.swornparkour.SwornParkour;
-import net.dmulloy2.swornparkour.parkour.ParkourGame;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourJoinTask;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourKickReason;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourPlayer;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourZone;
+import net.dmulloy2.swornparkour.handlers.ParkourHandler;
+import net.dmulloy2.swornparkour.tasks.ParkourJoinTask;
+import net.dmulloy2.swornparkour.types.ParkourGame;
+import net.dmulloy2.swornparkour.types.ParkourKickReason;
+import net.dmulloy2.swornparkour.types.ParkourPlayer;
+import net.dmulloy2.swornparkour.types.ParkourZone;
 import net.dmulloy2.swornparkour.util.FormatUtil;
 import net.dmulloy2.swornparkour.util.Util;
 
@@ -32,7 +32,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class PlayerListener implements Listener
 {
 	private final SwornParkour plugin;
-	public PlayerListener(final SwornParkour plugin)
+	public PlayerListener(SwornParkour plugin)
 	{
 		this.plugin = plugin;
 	}
@@ -40,7 +40,7 @@ public class PlayerListener implements Listener
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerInteract(PlayerInteractEvent event)
 	{
-		if (!plugin.getParkourManager().isInParkour(event.getPlayer()))
+		if (!plugin.getParkourHandler().isInParkour(event.getPlayer()))
 			return;
 		
 		if (!event.hasBlock())
@@ -53,7 +53,7 @@ public class PlayerListener implements Listener
 		if (block.getType() != Material.LAPIS_BLOCK)
 			return;
 		
-		ParkourPlayer player = plugin.getParkourManager().getParkourPlayer(event.getPlayer());
+		ParkourPlayer player = plugin.getParkourHandler().getParkourPlayer(event.getPlayer());
 		if (player == null)
 			return;
 		
@@ -69,14 +69,14 @@ public class PlayerListener implements Listener
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerMove(PlayerMoveEvent event)
 	{
-		if (!plugin.getParkourManager().isInParkour(event.getPlayer()))
+		if (!plugin.getParkourHandler().isInParkour(event.getPlayer()))
 			return;
 		
-		ParkourPlayer player = plugin.getParkourManager().getParkourPlayer(event.getPlayer());
+		ParkourPlayer player = plugin.getParkourHandler().getParkourPlayer(event.getPlayer());
 		if (player == null)
 			return;
 		
-		ParkourManager manager = plugin.getParkourManager();
+		ParkourHandler manager = plugin.getParkourHandler();
 		ParkourGame game = manager.getParkourGame(player);
 		ParkourZone zone = game.getParkourZone();
 		if (zone.getField().isInside(player.getPlayer()))
@@ -101,14 +101,14 @@ public class PlayerListener implements Listener
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerMove1(PlayerMoveEvent event)
 	{
-		if (!plugin.getParkourManager().isInParkour(event.getPlayer()))
+		if (!plugin.getParkourHandler().isInParkour(event.getPlayer()))
 			return;
 		
-		ParkourPlayer player = plugin.getParkourManager().getParkourPlayer(event.getPlayer());
+		ParkourPlayer player = plugin.getParkourHandler().getParkourPlayer(event.getPlayer());
 		if (player == null)
 			return;
 		
-		ParkourManager manager = plugin.getParkourManager();
+		ParkourHandler manager = plugin.getParkourHandler();
 		ParkourGame game = manager.getParkourGame(player);
 		ParkourZone zone = game.getParkourZone();
 		if (zone.getField().isInside(player.getPlayer()))
@@ -134,14 +134,14 @@ public class PlayerListener implements Listener
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerDeath(PlayerDeathEvent event)
 	{
-		if (!plugin.getParkourManager().isInParkour(event.getEntity()))
+		if (!plugin.getParkourHandler().isInParkour(event.getEntity()))
 			return;
 		
-		ParkourPlayer player = plugin.getParkourManager().getParkourPlayer(event.getEntity());
+		ParkourPlayer player = plugin.getParkourHandler().getParkourPlayer(event.getEntity());
 		if (player == null)
 			return;
 		
-		ParkourManager manager = plugin.getParkourManager();
+		ParkourHandler manager = plugin.getParkourHandler();
 		ParkourGame game = manager.getParkourGame(player);
 		
 		game.onDeath();
@@ -164,9 +164,9 @@ public class PlayerListener implements Listener
 
 	public void onPlayerDisconnect(Player player) 
 	{
-		if (plugin.getParkourManager().isInParkour(player))
+		if (plugin.getParkourHandler().isInParkour(player))
 		{
-			plugin.getParkourManager().getParkourGame(player).kick(ParkourKickReason.QUIT);
+			plugin.getParkourHandler().getParkourGame(player).kick(ParkourKickReason.QUIT);
 		}
 		
 		for (int i=0; i<plugin.waiting.size(); i++)
@@ -223,7 +223,7 @@ public class PlayerListener implements Listener
 								return;
 							}
 							
-							for (ParkourGame game : plugin.getParkourManager().parkourGames)
+							for (ParkourGame game : plugin.getParkourHandler().parkourGames)
 							{
 								if (game.getId() == gameId)
 								{
@@ -232,7 +232,7 @@ public class PlayerListener implements Listener
 								}
 							}
 							
-							if (plugin.getParkourManager().isInParkour(player))
+							if (plugin.getParkourHandler().isInParkour(player))
 							{
 								player.sendMessage(FormatUtil.format("&cYou are already in a game!"));
 								return;

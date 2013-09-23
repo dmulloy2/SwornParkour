@@ -1,7 +1,6 @@
-package net.dmulloy2.swornparkour.parkour.objects;
+package net.dmulloy2.swornparkour.types;
 
 import net.dmulloy2.swornparkour.SwornParkour;
-import net.dmulloy2.swornparkour.parkour.ParkourGame;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -69,7 +68,7 @@ public class ParkourSign
 	
 	private boolean isInGame()
 	{
-		for (ParkourGame game : plugin.getParkourManager().parkourGames)
+		for (ParkourGame game : plugin.getParkourHandler().parkourGames)
 		{
 			if (game.getId() == pz.getId())
 			{

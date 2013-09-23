@@ -1,6 +1,6 @@
 package net.dmulloy2.swornparkour.handlers;
 
-import net.dmulloy2.swornparkour.permissions.Permission;
+import net.dmulloy2.swornparkour.types.Permission;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

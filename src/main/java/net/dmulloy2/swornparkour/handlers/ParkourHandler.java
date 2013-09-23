@@ -1,14 +1,15 @@
-package net.dmulloy2.swornparkour;
+package net.dmulloy2.swornparkour.handlers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import net.dmulloy2.swornparkour.parkour.ParkourGame;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourCreator;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourKickReason;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourPlayer;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourZone;
+import net.dmulloy2.swornparkour.SwornParkour;
+import net.dmulloy2.swornparkour.types.ParkourCreator;
+import net.dmulloy2.swornparkour.types.ParkourGame;
+import net.dmulloy2.swornparkour.types.ParkourKickReason;
+import net.dmulloy2.swornparkour.types.ParkourPlayer;
+import net.dmulloy2.swornparkour.types.ParkourZone;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -18,14 +19,14 @@ import org.bukkit.inventory.PlayerInventory;
  * @author dmulloy2
  */
 
-public class ParkourManager 
+public class ParkourHandler
 {
 	public List<ParkourGame> parkourGames = new ArrayList<ParkourGame>();
 	public List<ParkourCreator> creators = new ArrayList<ParkourCreator>();
 	public HashMap<String, List<ItemStack>> redemption = new HashMap<String, List<ItemStack>>();
 	
 	private final SwornParkour plugin;
-	public ParkourManager(final SwornParkour plugin)
+	public ParkourHandler(SwornParkour plugin)
 	{
 		this.plugin = plugin;
 	}

@@ -1,7 +1,7 @@
 package net.dmulloy2.swornparkour.commands;
 
 import net.dmulloy2.swornparkour.SwornParkour;
-import net.dmulloy2.swornparkour.permissions.Permission;
+import net.dmulloy2.swornparkour.types.Permission;
 
 /**
  * @author dmulloy2

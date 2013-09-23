@@ -28,12 +28,8 @@ import org.bukkit.inventory.ItemStack;
  * @author Essentials
  */
 
-public final class InventoryWorkaround
+public final class InventoryUtil
 {
-	private InventoryWorkaround()
-	{
-	}
-
 	private static int firstPartial(final Inventory inventory, final ItemStack item, final int maxAmount)
 	{
 		if (item == null)

@@ -1,4 +1,4 @@
-package net.dmulloy2.swornparkour.parkour.objects;
+package net.dmulloy2.swornparkour.types;
 
 import java.util.Map;
 import java.util.Map.Entry;

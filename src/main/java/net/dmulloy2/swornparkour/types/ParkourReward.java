@@ -1,13 +1,13 @@
-package net.dmulloy2.swornparkour.parkour.objects;
+package net.dmulloy2.swornparkour.types;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
 
 /**
  * @author dmulloy2
@@ -15,35 +15,28 @@ import org.bukkit.material.MaterialData;
 
 public class ParkourReward
 {
-	private int itemId;
-	private byte data;
+	private Material type;
+	private short data;
 	private int amount;
 	private Map<Enchantment, Integer> enchantments;
 	private String displayName;
 	private List<String> lore;
 	
-	public ParkourReward(int itemId, byte data, int amount, Map<Enchantment, Integer> enchantments, String displayName, List<String> lore)
+	public ParkourReward(Material type, short data, int amount, Map<Enchantment, Integer> enchantments, String displayName, List<String> lore)
 	{
-		this.itemId = itemId;
+		this.type = type;
 		this.data = data;
 		this.amount = amount;
 		this.enchantments = enchantments;
 		this.displayName = displayName;
 		this.lore = lore;
 	}
-	
-	@SuppressWarnings("deprecation")
+
 	public ItemStack getItemStack()
 	{
-		ItemStack stack = new ItemStack(itemId, amount);
-		if (data > 0)
-		{
-			MaterialData materialData = stack.getData();
-			materialData.setData(data);
-			stack.setData(materialData);
-		}
+		ItemStack stack = new ItemStack(type, amount, data);
 		
-		if (enchantments.size() > 0)
+		if (! enchantments.isEmpty())
 		{
 			for (Entry<Enchantment, Integer> enchantment : enchantments.entrySet())
 			{
@@ -58,12 +51,12 @@ public class ParkourReward
 		}
 		
 		ItemMeta meta = stack.getItemMeta();
-		if (displayName != "")
+		if (! displayName.isEmpty())
 		{
 			meta.setDisplayName(displayName);
 		}
 		
-		if (lore.size() > 0)
+		if (! lore.isEmpty())
 		{
 			meta.setLore(lore);
 		}

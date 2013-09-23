@@ -1,4 +1,4 @@
-package net.dmulloy2.swornparkour;
+package net.dmulloy2.swornparkour.io;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -7,14 +7,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
-import net.dmulloy2.swornparkour.parkour.objects.EnchantmentType;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourField;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourReward;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourSign;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourZone;
+import net.dmulloy2.swornparkour.SwornParkour;
+import net.dmulloy2.swornparkour.types.EnchantmentType;
+import net.dmulloy2.swornparkour.types.ParkourField;
+import net.dmulloy2.swornparkour.types.ParkourReward;
+import net.dmulloy2.swornparkour.types.ParkourSign;
+import net.dmulloy2.swornparkour.types.ParkourZone;
 import net.dmulloy2.swornparkour.util.FormatUtil;
+import net.dmulloy2.swornparkour.util.MaterialUtil;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -26,7 +29,7 @@ import org.bukkit.enchantments.Enchantment;
 
 public class FileHelper 
 {
-	public SwornParkour plugin;
+	private final SwornParkour plugin;
 	public FileHelper(SwornParkour plugin)
 	{
 		this.plugin = plugin;
@@ -130,8 +133,8 @@ public class FileHelper
 		boolean readName = line.contains("name:");
 		boolean readLore = line.contains("lore:");
 		
-		int itemId = 0;
-		byte dat = 0;
+		Material mat = null;
+		short dat = 0;
 		int amt = 0;
 		
 		String[] split = line.split(" ");
@@ -139,12 +142,12 @@ public class FileHelper
 		String idSection = split[0];
 		if (idSection.contains(":"))
 		{
-			itemId = Integer.parseInt(idSection.split(":")[0]);
-			dat = (byte) Integer.parseInt(idSection.split(":")[1]);
+			mat = MaterialUtil.getMaterial(idSection.split(":")[0]);
+			dat = Short.parseShort(idSection.split(":")[1]);
 		}
 		else
 		{
-			itemId = Integer.parseInt(idSection);
+			mat = MaterialUtil.getMaterial(idSection);
 		}
 		
 		amt = Integer.parseInt(split[1]);
@@ -215,7 +218,7 @@ public class FileHelper
 			}
 		}
 		
-		ParkourReward reward = new ParkourReward(itemId, dat, amt, enchantments, displayName, lore);
+		ParkourReward reward = new ParkourReward(mat, dat, amt, enchantments, displayName, lore);
 		plugin.parkourRewards.put(pointValue, reward);
 	}
 	

@@ -1,10 +1,10 @@
 package net.dmulloy2.swornparkour.listeners;
 
 import net.dmulloy2.swornparkour.SwornParkour;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourField;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourSign;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourZone;
-import net.dmulloy2.swornparkour.permissions.Permission;
+import net.dmulloy2.swornparkour.types.ParkourField;
+import net.dmulloy2.swornparkour.types.ParkourSign;
+import net.dmulloy2.swornparkour.types.ParkourZone;
+import net.dmulloy2.swornparkour.types.Permission;
 import net.dmulloy2.swornparkour.util.FormatUtil;
 
 import org.bukkit.Location;
@@ -38,7 +38,7 @@ public class BlockListener implements Listener
 			if (field.isInside(loc))
 			{
 				Player player = event.getPlayer();
-				if (plugin.getParkourManager().isInParkour(player))
+				if (plugin.getParkourHandler().isInParkour(player))
 				{
 					String message = "&cYou cannot break blocks while in parkour!";
 					player.sendMessage(FormatUtil.format(message));
@@ -68,7 +68,7 @@ public class BlockListener implements Listener
 			if (field.isInside(loc))
 			{
 				Player player = event.getPlayer();
-				if (plugin.getParkourManager().isInParkour(player))
+				if (plugin.getParkourHandler().isInParkour(player))
 				{
 					String message = "&cYou cannot place blocks while in parkour!";
 					player.sendMessage(FormatUtil.format(message));

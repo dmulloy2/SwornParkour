@@ -1,4 +1,4 @@
-package net.dmulloy2.swornparkour.parkour;
+package net.dmulloy2.swornparkour.types;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,10 +6,6 @@ import java.util.Map.Entry;
 
 import net.dmulloy2.swornparkour.SwornParkour;
 import net.dmulloy2.swornparkour.commands.CmdClaim;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourKickReason;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourPlayer;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourReward;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourZone;
 import net.dmulloy2.swornparkour.util.FormatUtil;
 
 import org.bukkit.GameMode;
@@ -188,7 +184,7 @@ public class ParkourGame
 					ParkourReward reward = rewards.getValue();
 					ItemStack stack = reward.getItemStack();
 					
-					if (plugin.getParkourManager().inventoryHasRoom(player.getPlayer()))
+					if (plugin.getParkourHandler().inventoryHasRoom(player.getPlayer()))
 					{
 						player.getPlayer().getInventory().addItem(stack);
 					}
@@ -205,7 +201,7 @@ public class ParkourGame
 					ParkourReward reward = rewards.getValue();
 					ItemStack stack = reward.getItemStack();
 
-					if (plugin.getParkourManager().inventoryHasRoom(player.getPlayer()))
+					if (plugin.getParkourHandler().inventoryHasRoom(player.getPlayer()))
 					{
 						player.getPlayer().getInventory().addItem(stack);
 					}
@@ -224,7 +220,7 @@ public class ParkourGame
 			line.append(" &eUse " + new CmdClaim(plugin).getUsageTemplate(false));
 			player.sendMessage(line.toString());
 			
-			plugin.getParkourManager().redemption.put(player.getPlayer().getName(), redemption);
+			plugin.getParkourHandler().redemption.put(player.getPlayer().getName(), redemption);
 		}
 		
 		if (plugin.getEconomy() != null)
@@ -244,7 +240,7 @@ public class ParkourGame
 		
 		plugin.getServer().broadcastMessage(FormatUtil.format("&eParkour Game &b{0} &ehas completed!", getId()));
 		
-		plugin.getParkourManager().parkourGames.remove(this);
+		plugin.getParkourHandler().parkourGames.remove(this);
 		
 		plugin.updateSigns(gameId);
 	}

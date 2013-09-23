@@ -1,9 +1,8 @@
 package net.dmulloy2.swornparkour.commands;
 
-import net.dmulloy2.swornparkour.ParkourManager;
 import net.dmulloy2.swornparkour.SwornParkour;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourCreator;
-import net.dmulloy2.swornparkour.permissions.Permission;
+import net.dmulloy2.swornparkour.types.ParkourCreator;
+import net.dmulloy2.swornparkour.types.Permission;
 
 /**
  * @author dmulloy2
@@ -25,10 +24,9 @@ public class CmdSetPoint extends SwornParkourCommand
 	@Override
 	public void perform()
 	{
-		ParkourManager manager = plugin.getParkourManager();
-		if (manager.isCreatingArena(player))
+		if (getManager().isCreatingArena(player))
 		{
-			ParkourCreator creator = manager.getParkourCreator(player);
+			ParkourCreator creator = getManager().getParkourCreator(player);
 			creator.setPoint(creator.getStep());
 		}
 		else

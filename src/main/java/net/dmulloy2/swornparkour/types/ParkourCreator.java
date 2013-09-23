@@ -1,4 +1,4 @@
-package net.dmulloy2.swornparkour.parkour.objects;
+package net.dmulloy2.swornparkour.types;
 
 import net.dmulloy2.swornparkour.SwornParkour;
 import net.dmulloy2.swornparkour.commands.CmdSetPoint;
@@ -165,7 +165,7 @@ public class ParkourCreator
 	
 	public void complete()
 	{
-		plugin.getParkourManager().creators.remove(this);
+		plugin.getParkourHandler().creators.remove(this);
 		
 		ParkourZone pz = new ParkourZone(plugin, gameId);
 		

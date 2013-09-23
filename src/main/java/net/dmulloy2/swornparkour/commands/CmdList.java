@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.dmulloy2.swornparkour.SwornParkour;
-import net.dmulloy2.swornparkour.parkour.ParkourGame;
-import net.dmulloy2.swornparkour.parkour.objects.ParkourZone;
+import net.dmulloy2.swornparkour.types.ParkourGame;
+import net.dmulloy2.swornparkour.types.ParkourZone;
 
 /**
  * @author dmulloy2
