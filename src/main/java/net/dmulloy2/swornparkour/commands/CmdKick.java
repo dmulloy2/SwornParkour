@@ -34,13 +34,13 @@ public class CmdKick extends SwornParkourCommand
 			return;
 		}
 		
-		if (!getManager().isInParkour(target))
+		if (!handler.isInParkour(target))
 		{
 			err("&cThis player is not in a game!");
 			return;
 		}
 		
-		getManager().getParkourGame(player).kick(ParkourKickReason.FORCE);
+		handler.getParkourGame(player).kick(ParkourKickReason.FORCE);
 		
 		sendMessage("&eYou have kicked {0} from the game!", target.getName());
 	}

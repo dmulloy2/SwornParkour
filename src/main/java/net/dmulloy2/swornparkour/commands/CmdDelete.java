@@ -17,31 +17,31 @@ public class CmdDelete extends SwornParkourCommand
 		this.requiredArgs.add("id");
 		this.description = "Deletes an arena";
 		this.permission = Permission.CMD_DELETE;
-		
+
 		this.mustBePlayer = true;
 	}
-	
+
 	@Override
 	public void perform()
 	{
 		int id = argAsInt(0, true);
 		if (id == -1)
 			return;
-		
-		if (plugin.loadedArenas.size() < id)
+
+		if (plugin.getLoadedArenas().size() < id)
 		{
 			err("&cNo arena by id {0} exists!", id);
 			return;
 		}
-		
+
 		sendMessage("&eDeleting arena {0}...", id);
-		
-		if (getManager().deleteArena(id))
+
+		if (handler.deleteArena(id))
 		{
 			sendMessage("&eSuccessfully deleted arena!");
 			return;
 		}
-		
+
 		err("&cCheck console!");
 	}
 }

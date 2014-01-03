@@ -18,14 +18,11 @@
 package net.dmulloy2.swornparkour;
  
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.MissingResourceException;
 import java.util.logging.Level;
-
-import javax.xml.parsers.DocumentBuilderFactory;
 
 import lombok.Getter;
 import net.dmulloy2.swornparkour.commands.CmdAbandon;
@@ -58,15 +55,11 @@ import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
@@ -76,66 +69,70 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 public class SwornParkour extends JavaPlugin
 {	
-	/**Getters**/
+	/** Handlers **/
 	private @Getter PermissionHandler permissionHandler;
-	private @Getter LogHandler logHandler;
-	private @Getter CommandHandler commandHandler;
 	private @Getter ResourceHandler resourceHandler;
-	
+	private @Getter CommandHandler commandHandler;
 	private @Getter ParkourHandler parkourHandler;
+	private @Getter LogHandler logHandler;
+
 	private @Getter FileHelper fileHelper;
-	
+
+	/** Integration **/
 	private @Getter WorldEditPlugin worldEdit;
 	private @Getter Economy economy;
-	
+
+	/** Lists **/
+	private @Getter List<ParkourSign> signs = new ArrayList<ParkourSign>();
+	private @Getter List<ParkourZone> loadedArenas = new ArrayList<ParkourZone>();
+
+	/** HashMaps **/
+	private @Getter HashMap<Player, ParkourJoinTask> waiting = new HashMap<Player, ParkourJoinTask>();
+	private @Getter HashMap<Integer, ParkourReward> parkourRewards = new HashMap<Integer, ParkourReward>();
+
+	/** Configuration **/
+	private @Getter int teleportTimer, cashRewardMultiplier;
+	private @Getter boolean cumulativeRewards, itemRewardsEnabled, cashRewardsEnabled, debug;
+
+	/** Global Prefix **/
 	private @Getter String prefix = ChatColor.GOLD + "[Parkour] ";
-	
-	public List<ParkourSign> signs = new ArrayList<ParkourSign>();
-	public List<ParkourZone> loadedArenas = new ArrayList<ParkourZone>();
-	public List<ParkourJoinTask> waiting = new ArrayList<ParkourJoinTask>();
-	
-	public HashMap<Integer, ParkourReward> parkourRewards = new HashMap<Integer, ParkourReward>();
-	
-	public int teleportTimer, cashRewardMultiplier;
-	public boolean cumulativeRewards, itemRewardsEnabled, cashRewardsEnabled, updateChecker, debug;
-	private double newVersion, currentVersion;
-	
+
 	@Override
 	public void onEnable()
-	{	
+	{
 		long start = System.currentTimeMillis();
-		
+
+		/** Register Handlers **/
 		logHandler = new LogHandler(this);
 		commandHandler = new CommandHandler(this);
 		permissionHandler = new PermissionHandler();
-		
+
 		saveResource("messages.properties", true);
 		resourceHandler = new ResourceHandler(this, this.getClassLoader());
-		
+
 		parkourHandler = new ParkourHandler(this);
 		fileHelper = new FileHelper(this);
-		
-		currentVersion = Double.valueOf(getDescription().getVersion().replaceFirst("\\.", ""));
-		
+
+		/** Configuration **/
+		createDirectories();
 		saveDefaultConfig();
 		loadConfig();
-		
+
 		updateRewards();
-		
-		createDirectories();
-		
 		loadGames();
-		
+
 		fileHelper.loadSigns();
-		
+
+		/** Register Events **/
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new PlayerListener(this), this);
 		pm.registerEvents(new BlockListener(this), this);
-		
-		setupWorldEdit(pm);
-		setupVault(pm);
-		
-		/**Register Commands**/
+
+		/** Integration **/
+		setupWorldEditIntegration();
+		setupVaultIntegration();
+
+		/** Register Commands **/
 		commandHandler.setCommandPrefix("parkour");
 		commandHandler.registerCommand(new CmdAbandon(this));
 		commandHandler.registerCommand(new CmdClaim(this));
@@ -150,23 +147,20 @@ public class SwornParkour extends JavaPlugin
 		commandHandler.registerCommand(new CmdSetPoint(this));
 		commandHandler.registerCommand(new CmdSpawn(this));
 		commandHandler.registerCommand(new CmdVersion(this));
-		
-		if (updateChecker)
-			new UpdateCheckTask().runTaskTimer(this, 0, 432000);
 
 		long finish = System.currentTimeMillis();
-		
+
 		outConsole("{0} has been enabled ({1}ms)", getDescription().getFullName(), finish - start);
 	}
-	
+
 	private void createDirectories()
 	{
 		File games = new File(getDataFolder(), "games");
-		if (!games.exists()) 
+		if (!games.exists())
 		{
 			games.mkdir();
 		}
-			
+
 		File players = new File(getDataFolder(), "players");
 		if (players.exists())
 		{
@@ -178,7 +172,7 @@ public class SwornParkour extends JavaPlugin
 					child.delete();
 				}
 			}
-			
+
 			players.delete();
 		}
 	}
@@ -187,7 +181,7 @@ public class SwornParkour extends JavaPlugin
 	public void onDisable()
 	{
 		long start = System.currentTimeMillis();
-		
+
 		getServer().getServicesManager().unregisterAll(this);
 		getServer().getScheduler().cancelTasks(this);
 
@@ -195,14 +189,14 @@ public class SwornParkour extends JavaPlugin
 		{
 			fileHelper.save(zone);
 		}
-		
+
 		clearMemory();
-		
+
 		long finish = System.currentTimeMillis();
-		
+
 		outConsole("{0} has been disabled ({1}ms)", getDescription().getFullName(), finish - start);
 	}
-	
+
 	public void loadGames()
 	{
 		File folder = new File(getDataFolder(), "games");
@@ -212,7 +206,7 @@ public class SwornParkour extends JavaPlugin
 			fileHelper.load(file);
 		}
 	}
-	
+
 	public void updateSigns(int gameId)
 	{
 		for (ParkourSign sign : signs)
@@ -223,7 +217,7 @@ public class SwornParkour extends JavaPlugin
 			}
 		}
 	}
-	
+
 	public ParkourSign getParkourSign(Location loc)
 	{
 		for (ParkourSign sign : signs)
@@ -231,89 +225,74 @@ public class SwornParkour extends JavaPlugin
 			if (Util.checkLocation(sign.getLocation(), loc))
 				return sign;
 		}
-		
+
 		return null;
 	}
-	
-	public void loadConfig()
+
+	private final void loadConfig()
 	{
 		teleportTimer = getConfig().getInt("teleport-timer");
 		cumulativeRewards = getConfig().getBoolean("item-rewards-cumulative");
 		itemRewardsEnabled = getConfig().getBoolean("item-rewards-enabled");
 		cashRewardsEnabled = getConfig().getBoolean("cash-reward.enabled");
 		cashRewardMultiplier = getConfig().getInt("cash-reward.multiplier");
-		updateChecker = getConfig().getBoolean("update-checker");
 		debug = getConfig().getBoolean("debug");
-		
 	}
-	
+
 	public void reload()
 	{
 		reloadConfig();
 		updateRewards();
 		loadConfig();
 	}
-	
-	/**Console Logging**/
+
+	/** Console Logging **/
 	public void outConsole(String string, Object... objects)
 	{
 		logHandler.log(string, objects);
 	}
-	 
+
 	public void outConsole(Level level, String string, Object... objects)
 	{
 		logHandler.log(level, string, objects);
 	}
-	
+
 	public void debug(String string, Object... objects)
 	{
-		if (debug) outConsole("[Debug] " + string, objects);
+		if (debug)
+			outConsole("[Debug] " + string, objects);
 	}
 
-	/**Messages**/
+	/** Messages **/
 	public String getMessage(String string)
 	{
-		try 
+		try
 		{
 			// TODO: Move all the messages to messages.properties
 			return resourceHandler.getMessages().getString(string);
 		}
-		catch (MissingResourceException ex) 
+		catch (MissingResourceException ex)
 		{
 			outConsole(Level.WARNING, "Messages locale is missing key for: {0}", string);
 			return null;
 		}
 	}
-	
-	private void setupWorldEdit(PluginManager pm)
-	{
-		if (pm.isPluginEnabled("WorldEdit"))
-		{
-			Plugin worldEditPlugin = pm.getPlugin("WorldEdit");
-			worldEdit = (WorldEditPlugin)worldEditPlugin;
-		}
-		else
-		{
-			outConsole(Level.SEVERE, "Could not find WorldEdit! Disabling!");
-			pm.disablePlugin(this);
-		}
-	}
-	
-	/**Update Rewards Table**/
+
+	/** Update Rewards Table **/
 	public void updateRewards()
 	{
 		parkourRewards.clear();
-		
-		for (int i=0; i<25; i++)
+
+		for (int i = 0; i < 25; i++)
 		{
 			String reward = getConfig().getString("item-rewards." + i);
-			
+
 			fileHelper.readReward(i, reward);
 		}
-		
+
 		outConsole("Loaded all rewards!");
 	}
-	
+
 	public ParkourZone getParkourZone(int gameId)
 	{
 		for (ParkourZone zone : loadedArenas)
@@ -323,100 +302,72 @@ public class SwornParkour extends JavaPlugin
 				return zone;
 			}
 		}
-		
+
 		return null;
 	}
-	
-	private void setupVault(PluginManager pm)
+
+	/**
+	 * Vault {@link Economy} integration
+	 */
+	private final void setupVaultIntegration()
 	{
+		PluginManager pm = getServer().getPluginManager();
 		if (pm.isPluginEnabled("Vault"))
 		{
-			setupEconomy();
-			outConsole(getMessage("log_vault_found"));
-		} 
-		else 
-		{
-			outConsole(getMessage("log_vault_notfound"));
+			RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(Economy.class);
+			if (economyProvider != null)
+			{
+				economy = economyProvider.getProvider();
+
+				outConsole("Enabled economy through {0}!", economy.getName());
+			}
+			else
+			{
+				outConsole("Failed to hook into Vault economy.");
+			}
 		}
-	}
-	
-    private boolean setupEconomy() 
-	{
-		RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(Economy.class);
-		if (economyProvider != null) 
-		{
-			economy = (economyProvider.getProvider());
-		}
- 
-		return economy != null;
 	}
 
-    public double updateCheck(double currentVersion)
-    {
-        String pluginUrlString = "http://dev.bukkit.org/bukkit-plugins/swornparkour/files.rss";
-        try
-        {
-            URL url = new URL(pluginUrlString);
-            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(url.openConnection().getInputStream());
-            doc.getDocumentElement().normalize();
-            NodeList nodes = doc.getElementsByTagName("item");
-            Node firstNode = nodes.item(0);
-            if (firstNode.getNodeType() == 1) 
-            {
-                Element firstElement = (Element)firstNode;
-                NodeList firstElementTagName = firstElement.getElementsByTagName("title");
-                Element firstNameElement = (Element) firstElementTagName.item(0);
-                NodeList firstNodes = firstNameElement.getChildNodes();
-                return Double.valueOf(firstNodes.item(0).getNodeValue().replaceAll("[a-zA-Z ]", "").replaceFirst("\\.", ""));
-            }
-        }
-        catch (Exception e) 
-        {
-        	debug(getMessage("log_update_error"), e.getMessage());
-        }
-        
-        return currentVersion;
-    }
-    
-    public boolean updateNeeded()
-    {
-    	return (updateCheck(currentVersion) > currentVersion);
-    }
-	
+	/**
+	 * Sets up integration with WorldEdit
+	 */
+	private final void setupWorldEditIntegration()
+	{
+		PluginManager pm = getServer().getPluginManager();
+		if (pm.isPluginEnabled("WorldEdit"))
+		{
+			try
+			{
+				Plugin plugin = pm.getPlugin("WorldEdit");
+				if (plugin instanceof WorldEditPlugin)
+				{
+					worldEdit = (WorldEditPlugin) plugin;
+
+					outConsole("Integration with WorldEdit successful!");
+					return;
+				}
+			}
+			catch (Throwable ex)
+			{
+				//
+			}
+
+			outConsole(Level.WARNING, "Could not hook into WorldEdit!");
+		}
+	}
+
 	private void clearMemory()
 	{
 		parkourHandler.onShutdown();
-		
+
 		parkourRewards.clear();
 		loadedArenas.clear();
 		waiting.clear();
 	}
-	
+
 	public void removeSign(ParkourSign sign)
 	{
 		signs.remove(sign);
 		fileHelper.updateSignSave();
-	}
-	
-	
-	public class UpdateCheckTask extends BukkitRunnable
-	{
-		@Override
-		public void run()
-		{
-			try
-			{
-				newVersion = updateCheck(currentVersion);
-				if (newVersion > currentVersion) 
-				{
-					outConsole(getMessage("log_update"));
-					outConsole(getMessage("log_update_url"), getMessage("update_url"));
-				}
-			} 
-			catch (Exception e) 
-			{
-				debug(getMessage("log_update_error"), e.getMessage());
-			}
-		}
 	}
 }

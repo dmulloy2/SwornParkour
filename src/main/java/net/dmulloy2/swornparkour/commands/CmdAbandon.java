@@ -22,13 +22,13 @@ public class CmdAbandon extends SwornParkourCommand
 	@Override
 	public void perform()
 	{
-		if (!getManager().isCreatingArena(player))
+		if (! handler.isCreatingArena(player))
 		{
 			err("&cYou are not creating an arena!");
 			return;
 		}
 		
-		getManager().creators.remove(getManager().getParkourCreator(player));
+		handler.getCreators().remove(handler.getParkourCreator(player));
 		
 		sendMessage("&cYou have stopped creating the arena!");
 	}

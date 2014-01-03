@@ -122,7 +122,7 @@ public class FileHelper
 		
 		pz.setTimesPlayed(fc.getInt("timesPlayed"));
 		
-		plugin.loadedArenas.add(pz);
+		plugin.getLoadedArenas().add(pz);
 		
 		plugin.outConsole("Loaded game number {0}!", id);
 	}
@@ -219,7 +219,7 @@ public class FileHelper
 		}
 		
 		ParkourReward reward = new ParkourReward(mat, dat, amt, enchantments, displayName, lore);
-		plugin.parkourRewards.put(pointValue, reward);
+		plugin.getParkourRewards().put(pointValue, reward);
 	}
 	
 	public boolean deleteFile(int gameId)
@@ -261,7 +261,7 @@ public class FileHelper
 		
 		YamlConfiguration fc = YamlConfiguration.loadConfiguration(file);
 		
-		for (ParkourSign sign : plugin.signs)
+		for (ParkourSign sign : plugin.getSigns())
 		{
 			String path = "signs." + sign.getId() + ".";
 
@@ -275,7 +275,7 @@ public class FileHelper
 			fc.set(path + "z", loc.getBlockZ());
 		}
 		
-		fc.set("total", plugin.signs.size());
+		fc.set("total", plugin.getSigns().size());
 		
 		try 
 		{ 
@@ -310,7 +310,7 @@ public class FileHelper
 						if (zone != null)
 						{
 							ParkourSign sign = new ParkourSign(plugin, loc, zone, i);
-							plugin.signs.add(sign);
+							plugin.getSigns().add(sign);
 						}
 					}
 				}

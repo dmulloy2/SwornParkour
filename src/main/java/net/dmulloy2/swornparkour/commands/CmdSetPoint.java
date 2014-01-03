@@ -24,9 +24,9 @@ public class CmdSetPoint extends SwornParkourCommand
 	@Override
 	public void perform()
 	{
-		if (getManager().isCreatingArena(player))
+		if (handler.isCreatingArena(player))
 		{
-			ParkourCreator creator = getManager().getParkourCreator(player);
+			ParkourCreator creator = handler.getParkourCreator(player);
 			creator.setPoint(creator.getStep());
 		}
 		else

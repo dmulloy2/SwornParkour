@@ -2,11 +2,13 @@ package net.dmulloy2.swornparkour.commands;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import net.dmulloy2.swornparkour.SwornParkour;
 import net.dmulloy2.swornparkour.handlers.ParkourHandler;
 import net.dmulloy2.swornparkour.types.Permission;
 import net.dmulloy2.swornparkour.util.FormatUtil;
+import net.dmulloy2.swornparkour.util.Util;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -32,13 +34,16 @@ public abstract class SwornParkourCommand
 	protected List<String> requiredArgs;
 	protected List<String> optionalArgs;
 	protected List<String> aliases;
+
+	protected ParkourHandler handler;
 		
 	public SwornParkourCommand(SwornParkour plugin) 
 	{
 		this.plugin = plugin;
-		requiredArgs = new ArrayList<String>(2);
-		optionalArgs = new ArrayList<String>(2);
-		aliases = new ArrayList<String>(2);
+		this.handler = plugin.getParkourHandler();
+		this.requiredArgs = new ArrayList<String>(2);
+		this.optionalArgs = new ArrayList<String>(2);
+		this.aliases = new ArrayList<String>(2);
 	}
 	
 	public abstract void perform();
@@ -50,7 +55,7 @@ public abstract class SwornParkourCommand
 		if (sender instanceof Player)
 			player = (Player) sender;
 		
-		if (mustBePlayer && !isPlayer())
+		if (mustBePlayer && ! isPlayer())
 		{
 			err(plugin.getMessage("error_must_be_player"));
 			return;
@@ -62,10 +67,22 @@ public abstract class SwornParkourCommand
 			return;
 		}
 		
-		if (hasPermission())
+		if (! hasPermission())
+		{
+			err("You do not have permission to perform this command!");
+			plugin.getLogHandler().log(Level.WARNING, sender.getName() + " was denied access to a command!");
+			return;
+		}
+
+		try
+		{
 			perform();
-		else
-			err(plugin.getMessage("error_insufficient_permissions"));
+		}
+		catch (Throwable e)
+		{
+			err("Error executing command: {0}", e.getMessage());
+			plugin.getLogHandler().debug(Util.getUsefulStack(e, "executing command " + name));
+		}
 	}
 	
 	protected final boolean isPlayer() 
@@ -109,11 +126,6 @@ public abstract class SwornParkourCommand
 	protected final String getMessage(String msg)
 	{
 		return plugin.getMessage(msg);
-	}
-	
-	protected final ParkourHandler getManager()
-	{
-		return plugin.getParkourHandler();
 	}
 
 	public final String getName() 

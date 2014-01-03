@@ -18,10 +18,14 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.SignChangeEvent;
 
+/**
+ * @author dmulloy2
+ */
+
 public class BlockListener implements Listener
 {
 	private final SwornParkour plugin;
-	public BlockListener(final SwornParkour plugin)
+	public BlockListener(SwornParkour plugin)
 	{
 		this.plugin = plugin;
 	}
@@ -32,7 +36,7 @@ public class BlockListener implements Listener
 		Block block = event.getBlock();
 		Location loc = block.getLocation();
 		
-		for (ParkourZone zone : plugin.loadedArenas)
+		for (ParkourZone zone : plugin.getLoadedArenas())
 		{
 			ParkourField field = zone.getField();
 			if (field.isInside(loc))
@@ -62,7 +66,7 @@ public class BlockListener implements Listener
 		Block block = event.getBlock();
 		Location loc = block.getLocation();
 		
-		for (ParkourZone zone : plugin.loadedArenas)
+		for (ParkourZone zone : plugin.getLoadedArenas())
 		{
 			ParkourField field = zone.getField();
 			if (field.isInside(loc))
@@ -104,8 +108,8 @@ public class BlockListener implements Listener
 					ParkourZone pz = plugin.getParkourZone(id);
 					if (pz != null)
 					{
-						ParkourSign sign = new ParkourSign(plugin, event.getBlock().getLocation(), pz, plugin.signs.size());
-						plugin.signs.add(sign);
+						ParkourSign sign = new ParkourSign(plugin, event.getBlock().getLocation(), pz, plugin.getSigns().size());
+						plugin.getSigns().add(sign);
 						sign.update();
 						
 						plugin.getFileHelper().updateSignSave();

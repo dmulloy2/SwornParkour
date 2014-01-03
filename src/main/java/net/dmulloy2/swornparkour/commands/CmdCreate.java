@@ -23,18 +23,18 @@ public class CmdCreate extends SwornParkourCommand
 	@Override
 	public void perform()
 	{
-		if (getManager().isCreatingArena(player))
+		if (handler.isCreatingArena(player))
 		{
 			err("&cYou are already creating an arena!");
 			return;
 		}
 		
-		if (getManager().isInParkour(player))
+		if (handler.isInParkour(player))
 		{
 			err("&cYou cannot create an arena while ingame!");
 			return;
 		}
 		
-		getManager().createNewParkourGame(player);
+		handler.createNewParkourGame(player);
 	}
 }

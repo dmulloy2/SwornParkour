@@ -22,12 +22,12 @@ public class CmdLeave extends SwornParkourCommand
 	@Override
 	public void perform()
 	{
-		if (!getManager().isInParkour(player))
+		if (!handler.isInParkour(player))
 		{
 			err("You are not in a parkour game!");
 			return;
 		}
 		
-		getManager().getParkourGame(player).kick(ParkourKickReason.LEAVE);
+		handler.getParkourGame(player).kick(ParkourKickReason.LEAVE);
 	}
 }

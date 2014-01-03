@@ -165,7 +165,7 @@ public class ParkourCreator
 	
 	public void complete()
 	{
-		plugin.getParkourHandler().creators.remove(this);
+		plugin.getParkourHandler().getCreators().remove(this);
 		
 		ParkourZone pz = new ParkourZone(plugin, gameId);
 		
@@ -177,8 +177,7 @@ public class ParkourCreator
 		pz.setEnd(end);
 		
 		plugin.getFileHelper().save(pz);
-		
-		plugin.loadedArenas.add(pz);
+		plugin.getLoadedArenas().add(pz);
 	}
 	
 	public void sendMessage(String string, Object...objects)

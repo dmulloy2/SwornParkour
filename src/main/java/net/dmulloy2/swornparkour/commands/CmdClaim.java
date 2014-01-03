@@ -17,28 +17,27 @@ public class CmdClaim extends SwornParkourCommand
 		super(plugin);
 		this.name = "claim";
 		this.description = "Claim parkour rewards";
-		
+
 		this.mustBePlayer = true;
 	}
-	
+
 	@Override
 	public void perform()
 	{
-		if (!getManager().redemption.containsKey(player.getName()))
+		if (! handler.getRedemption().containsKey(player.getName()))
 		{
 			err("&cYou have no rewards to claim!");
 			return;
 		}
-		
+
 		sendMessage("&eClaiming rewards...");
-		
-		List<ItemStack> items = getManager().redemption.get(player.getName());
-		
+
+		List<ItemStack> items = handler.getRedemption().get(player.getName());
 		for (ItemStack item : items)
 		{
 			player.getInventory().addItem(item);
 		}
-		
-		getManager().redemption.remove(player.getName());
+
+		handler.getRedemption().remove(player.getName());
 	}
 }

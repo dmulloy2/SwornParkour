@@ -32,12 +32,12 @@ public class CmdList extends SwornParkourCommand
 		line.append("&3====[ &eAvailable Arenas &3]====");
 		lines.add(line.toString());
 		
-		for (ParkourZone zone : plugin.loadedArenas)
+		for (ParkourZone zone : plugin.getLoadedArenas())
 		{
 			int id = zone.getId();
 			boolean active = false;
 			
-			for (ParkourGame game : getManager().parkourGames)
+			for (ParkourGame game : handler.getParkourGames())
 			{
 				if (game.getId() == id)
 				{

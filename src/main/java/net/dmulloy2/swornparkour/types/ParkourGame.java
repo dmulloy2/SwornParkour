@@ -174,10 +174,10 @@ public class ParkourGame
 		player.sendMessage("&eYou won with a total of &b{0} &epoints!", points);
 		
 		List<ItemStack> redemption = new ArrayList<ItemStack>();
-		for (Entry<Integer, ParkourReward> rewards : plugin.parkourRewards.entrySet())
+		for (Entry<Integer, ParkourReward> rewards : plugin.getParkourRewards().entrySet())
 		{
 			int pointValue = rewards.getKey();
-			if (plugin.cumulativeRewards)
+			if (plugin.isCumulativeRewards())
 			{
 				if (points >= pointValue)
 				{
@@ -220,14 +220,14 @@ public class ParkourGame
 			line.append(" &eUse " + new CmdClaim(plugin).getUsageTemplate(false));
 			player.sendMessage(line.toString());
 			
-			plugin.getParkourHandler().redemption.put(player.getPlayer().getName(), redemption);
+			plugin.getParkourHandler().getRedemption().put(player.getPlayer().getName(), redemption);
 		}
 		
 		if (plugin.getEconomy() != null)
 		{
-			if (plugin.cashRewardsEnabled)
+			if (plugin.isCashRewardsEnabled())
 			{
-				int reward = plugin.cashRewardMultiplier * points;
+				int reward = plugin.getCashRewardMultiplier() * points;
 				plugin.getEconomy().depositPlayer(player.getPlayer().getName(), reward);
 				player.sendMessage("&a{0} has been added to your balance!", plugin.getEconomy().format(reward));
 			}
@@ -240,7 +240,7 @@ public class ParkourGame
 		
 		plugin.getServer().broadcastMessage(FormatUtil.format("&eParkour Game &b{0} &ehas completed!", getId()));
 		
-		plugin.getParkourHandler().parkourGames.remove(this);
+		plugin.getParkourHandler().getParkourGames().remove(this);
 		
 		plugin.updateSigns(gameId);
 	}

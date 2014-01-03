@@ -28,13 +28,13 @@ public class CmdJoin extends SwornParkourCommand
 		if (gameId == -1)
 			return;
 		
-		if (plugin.loadedArenas.size() < gameId)
+		if (plugin.getLoadedArenas().size() < gameId)
 		{
 			err("&cNo arena by that number exists!");
 			return;
 		}
 		
-		for (ParkourGame game : getManager().parkourGames)
+		for (ParkourGame game : handler.getParkourGames())
 		{
 			if (game.getId() == gameId)
 			{
@@ -43,15 +43,15 @@ public class CmdJoin extends SwornParkourCommand
 			}
 		}
 		
-		if (getManager().isInParkour(player))
+		if (handler.isInParkour(player))
 		{
 			err("&cYou are already in a game!");
 			return;
 		}
 		
-		int teleportTimer = plugin.teleportTimer * 20;
+		int teleportTimer = plugin.getTeleportTimer() * 20;
 		
-		sendMessage("&ePlease stand still for {0} seconds!", plugin.teleportTimer);
+		sendMessage("&ePlease stand still for {0} seconds!", plugin.getTeleportTimer());
 		
 		new ParkourJoinTask(plugin, player, gameId).runTaskLater(plugin, teleportTimer);
 	}

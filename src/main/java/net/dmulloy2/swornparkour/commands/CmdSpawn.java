@@ -24,13 +24,16 @@ public class CmdSpawn extends SwornParkourCommand
 	public void perform()
 	{
 		int id = argAsInt(0, true);
-		if (plugin.loadedArenas.size() < id)
+		if (id == -1)
+			return;
+
+		if (plugin.getLoadedArenas().size() < id)
 		{
 			err("&cNo arena with id {0} exists!", id);
 			return;
 		}
 		
-		for (ParkourZone zone : plugin.loadedArenas)
+		for (ParkourZone zone : plugin.getLoadedArenas())
 		{
 			if (zone.getId() == id)
 			{

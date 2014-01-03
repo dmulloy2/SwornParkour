@@ -68,12 +68,10 @@ public class ParkourSign
 	
 	private boolean isInGame()
 	{
-		for (ParkourGame game : plugin.getParkourHandler().parkourGames)
+		for (ParkourGame game : plugin.getParkourHandler().getParkourGames())
 		{
 			if (game.getId() == pz.getId())
-			{
 				return true;
-			}
 		}
 		
 		return false;

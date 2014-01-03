@@ -2,9 +2,8 @@ package net.dmulloy2.swornparkour.handlers;
 
 import java.util.logging.Level;
 
+import net.dmulloy2.swornparkour.SwornParkour;
 import net.dmulloy2.swornparkour.util.FormatUtil;
-
-import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * @author dmulloy2
@@ -12,19 +11,27 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class LogHandler
 {
-	private final JavaPlugin plugin;
-	public LogHandler(JavaPlugin plugin)
+	private final SwornParkour plugin;
+	public LogHandler(SwornParkour plugin)
 	{
 		this.plugin = plugin;
 	}
 
 	public final void log(Level level, String msg, Object... objects)
 	{
-		plugin.getServer().getLogger().log(level, FormatUtil.format("[{0}] {1}", plugin.getName(), FormatUtil.format(msg, objects)));		
+		plugin.getLogger().log(level, FormatUtil.format(msg, objects));
 	}
 
-	public final void log(String msg, Object... objects) 
+	public final void log(String msg, Object... objects)
 	{
-		log(Level.INFO, msg, objects);
+		plugin.getLogger().info(FormatUtil.format(msg, objects));
+	}
+
+	public final void debug(String msg, Object... objects)
+	{
+		if (plugin.getConfig().getBoolean("debug", false))
+		{
+			plugin.getLogger().info(FormatUtil.format("[Debug] " + msg, objects));
+		}
 	}
 }
