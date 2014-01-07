@@ -13,20 +13,24 @@
 
   <repositories>
     <repository>
-      <id>essentials-repo</id>
-      <url>http://ci.ess3.net/nexus/content/groups/public/</url>
+     <id>shadowvolt-repo</id>
+     <url>http://ci.shadowvolt.com/plugin/repository/everything/</url>
     </repository>
     <repository>
       <id>bukkit-repo</id>
-      <url>http://repo.bukkit.org/content/groups/public</url>
+      <url>http://repo.bukkit.org/content/groups/public/</url>
     </repository>
     <repository>
-      <id>sk89q</id>
-      <url>http://maven.sk89q.com/repo</url>
+      <id>sk89q-repo</id>
+      <url>http://maven.sk89q.com/repo/</url>
     </repository>
     <repository>
       <id>milkbowl-repo</id>
-      <url>http://ci.herocraftonline.com/plugin/repository/everything</url>
+      <url>http://ci.herocraftonline.com/plugin/repository/everything/</url>
+    </repository>
+    <repository>
+      <id>essentials-repo</id>
+      <url>http://repo.ess3.net/content/repositories/public/</url>
     </repository>
   </repositories>
 
@@ -92,12 +96,12 @@
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
-      <version>1.7.2-R0.1-SNAPSHOT</version>
+      <version>1.7.2-R0.3-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>0.11.6</version>
+      <version>0.12.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -108,12 +112,12 @@
     <dependency>
       <groupId>net.milkbowl.vault</groupId>
       <artifactId>Vault</artifactId>
-      <version>1.2.9-SNAPSHOT</version>
+      <version>1.2.30</version>
     </dependency>
     <dependency>
-      <groupId>com.earth2me</groupId>
-      <artifactId>essentials</artifactId>
-      <version>2.9.1</version>
+      <groupId>net.ess3</groupId>
+      <artifactId>Essentials</artifactId>
+      <version>2.13-SNAPSHOT</version>
     </dependency>
   </dependencies>
 </project>
