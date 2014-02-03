@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import lombok.Getter;
-
 import net.dmulloy2.swornparkour.SwornParkour;
 import net.dmulloy2.swornparkour.types.ParkourCreator;
 import net.dmulloy2.swornparkour.types.ParkourGame;
