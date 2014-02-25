@@ -35,7 +35,7 @@ public class CmdSpawn extends SwornParkourCommand
 		
 		for (ParkourZone zone : plugin.getLoadedArenas())
 		{
-			if (zone.getId() == id)
+			if (zone.getGameId() == id)
 			{
 				Location loc = zone.getSpawn();
 				player.teleport(loc.clone().add(0, 2.0D, 0));

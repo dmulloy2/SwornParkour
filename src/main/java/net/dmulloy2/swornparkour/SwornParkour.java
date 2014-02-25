@@ -39,11 +39,11 @@ import net.dmulloy2.swornparkour.commands.CmdSetPoint;
 import net.dmulloy2.swornparkour.commands.CmdSpawn;
 import net.dmulloy2.swornparkour.commands.CmdVersion;
 import net.dmulloy2.swornparkour.handlers.CommandHandler;
+import net.dmulloy2.swornparkour.handlers.FileHandler;
 import net.dmulloy2.swornparkour.handlers.LogHandler;
 import net.dmulloy2.swornparkour.handlers.ParkourHandler;
 import net.dmulloy2.swornparkour.handlers.PermissionHandler;
 import net.dmulloy2.swornparkour.handlers.ResourceHandler;
-import net.dmulloy2.swornparkour.io.FileHelper;
 import net.dmulloy2.swornparkour.listeners.BlockListener;
 import net.dmulloy2.swornparkour.listeners.PlayerListener;
 import net.dmulloy2.swornparkour.tasks.ParkourJoinTask;
@@ -74,9 +74,8 @@ public class SwornParkour extends JavaPlugin
 	private @Getter ResourceHandler resourceHandler;
 	private @Getter CommandHandler commandHandler;
 	private @Getter ParkourHandler parkourHandler;
+	private @Getter FileHandler fileHandler;
 	private @Getter LogHandler logHandler;
-
-	private @Getter FileHelper fileHelper;
 
 	/** Integration **/
 	private @Getter WorldEditPlugin worldEdit;
@@ -111,7 +110,7 @@ public class SwornParkour extends JavaPlugin
 		resourceHandler = new ResourceHandler(this, this.getClassLoader());
 
 		parkourHandler = new ParkourHandler(this);
-		fileHelper = new FileHelper(this);
+		fileHandler = new FileHandler(this);
 
 		/** Configuration **/
 		createDirectories();
@@ -121,7 +120,7 @@ public class SwornParkour extends JavaPlugin
 		updateRewards();
 		loadGames();
 
-		fileHelper.loadSigns();
+		fileHandler.loadSigns();
 
 		/** Register Events **/
 		PluginManager pm = getServer().getPluginManager();
@@ -187,7 +186,7 @@ public class SwornParkour extends JavaPlugin
 
 		for (ParkourZone zone : loadedArenas)
 		{
-			fileHelper.save(zone);
+			fileHandler.save(zone);
 		}
 
 		clearMemory();
@@ -203,7 +202,7 @@ public class SwornParkour extends JavaPlugin
 		File[] children = folder.listFiles();
 		for (File file : children)
 		{
-			fileHelper.load(file);
+			fileHandler.load(file);
 		}
 	}
 
@@ -211,7 +210,7 @@ public class SwornParkour extends JavaPlugin
 	{
 		for (ParkourSign sign : signs)
 		{
-			if (sign.getZone().getId() == gameId)
+			if (sign.getZone().getGameId() == gameId)
 			{
 				sign.update();
 			}
@@ -287,7 +286,7 @@ public class SwornParkour extends JavaPlugin
 		{
 			String reward = getConfig().getString("item-rewards." + i);
 
-			fileHelper.readReward(i, reward);
+			fileHandler.readReward(i, reward);
 		}
 
 		outConsole("Loaded all rewards!");
@@ -297,7 +296,7 @@ public class SwornParkour extends JavaPlugin
 	{
 		for (ParkourZone zone : loadedArenas)
 		{
-			if (zone.getId() == gameId)
+			if (zone.getGameId() == gameId)
 			{
 				return zone;
 			}
@@ -368,6 +367,6 @@ public class SwornParkour extends JavaPlugin
 	public void removeSign(ParkourSign sign)
 	{
 		signs.remove(sign);
-		fileHelper.updateSignSave();
+		fileHandler.updateSignSave();
 	}
 }

@@ -14,20 +14,19 @@ public class ParkourJoinTask extends BukkitRunnable
 	public final SwornParkour plugin;
 	public final Player player;
 	public final int gameId;
-	
+
 	public ParkourJoinTask(final SwornParkour plugin, final Player player, final int gameId)
 	{
 		this.plugin = plugin;
 		this.player = player;
-		this.gameId =  gameId;
+		this.gameId = gameId;
 		this.plugin.getWaiting().put(player, this);
 	}
-	
+
 	@Override
 	public void run()
 	{
 		plugin.getWaiting().remove(player);
 		plugin.getParkourHandler().joinParkour(player, gameId);
-		this.cancel();
 	}
 }

@@ -281,12 +281,12 @@ public class ParkourGame
 			
 			if (checkpoint == 1)
 			{
-				teleport(pz.getCheckpoint1());
+				teleport(pz.getCheck1());
 			}
 			
 			if (checkpoint == 2)
 			{
-				teleport(pz.getCheckpoint2());
+				teleport(pz.getCheck2());
 			}
 		}
 	}

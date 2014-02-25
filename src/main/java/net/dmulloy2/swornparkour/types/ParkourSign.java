@@ -47,7 +47,7 @@ public class ParkourSign
 			Sign s = (Sign)b.getState();
 			s.setLine(0, "[SwornParkour]");
 			s.setLine(1, "Click to join");
-			s.setLine(2, "Game " + pz.getId());
+			s.setLine(2, "Game " + pz.getGameId());
 			
 			if (isInGame())
 			{
@@ -70,7 +70,7 @@ public class ParkourSign
 	{
 		for (ParkourGame game : plugin.getParkourHandler().getParkourGames())
 		{
-			if (game.getId() == pz.getId())
+			if (game.getId() == pz.getGameId())
 				return true;
 		}
 		

@@ -1,5 +1,6 @@
 package net.dmulloy2.swornparkour.listeners;
 
+import lombok.AllArgsConstructor;
 import net.dmulloy2.swornparkour.SwornParkour;
 import net.dmulloy2.swornparkour.types.ParkourField;
 import net.dmulloy2.swornparkour.types.ParkourSign;
@@ -22,20 +23,17 @@ import org.bukkit.event.block.SignChangeEvent;
  * @author dmulloy2
  */
 
+@AllArgsConstructor
 public class BlockListener implements Listener
 {
 	private final SwornParkour plugin;
-	public BlockListener(SwornParkour plugin)
-	{
-		this.plugin = plugin;
-	}
-	
+
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockBreak(BlockBreakEvent event)
 	{
 		Block block = event.getBlock();
 		Location loc = block.getLocation();
-		
+
 		for (ParkourZone zone : plugin.getLoadedArenas())
 		{
 			ParkourField field = zone.getField();
@@ -49,8 +47,8 @@ public class BlockListener implements Listener
 					event.setCancelled(true);
 					return;
 				}
-				
-				if (!plugin.getPermissionHandler().hasPermission(player, Permission.BUILD))
+
+				if (! plugin.getPermissionHandler().hasPermission(player, Permission.BUILD))
 				{
 					String message = "&cYou do not have permission to edit parkour arenas!";
 					player.sendMessage(FormatUtil.format(message));
@@ -59,13 +57,13 @@ public class BlockListener implements Listener
 			}
 		}
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockPlace(BlockPlaceEvent event)
 	{
 		Block block = event.getBlock();
 		Location loc = block.getLocation();
-		
+
 		for (ParkourZone zone : plugin.getLoadedArenas())
 		{
 			ParkourField field = zone.getField();
@@ -79,8 +77,8 @@ public class BlockListener implements Listener
 					event.setCancelled(true);
 					return;
 				}
-				
-				if (!plugin.getPermissionHandler().hasPermission(player, Permission.BUILD))
+
+				if (! plugin.getPermissionHandler().hasPermission(player, Permission.BUILD))
 				{
 					String message = "&cYou do not have permission to edit parkour arenas!";
 					player.sendMessage(FormatUtil.format(message));
@@ -89,7 +87,7 @@ public class BlockListener implements Listener
 			}
 		}
 	}
-	
+
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onSignChange(SignChangeEvent event)
 	{
@@ -103,7 +101,7 @@ public class BlockListener implements Listener
 					{
 						return;
 					}
-					
+
 					int id = Integer.parseInt(event.getLine(2));
 					ParkourZone pz = plugin.getParkourZone(id);
 					if (pz != null)
@@ -111,9 +109,9 @@ public class BlockListener implements Listener
 						ParkourSign sign = new ParkourSign(plugin, event.getBlock().getLocation(), pz, plugin.getSigns().size());
 						plugin.getSigns().add(sign);
 						sign.update();
-						
-						plugin.getFileHelper().updateSignSave();
-						
+
+						plugin.getFileHandler().updateSignSave();
+
 						event.getPlayer().sendMessage(FormatUtil.format("&eCreated new Join Sign!"));
 					}
 					else
@@ -134,7 +132,7 @@ public class BlockListener implements Listener
 			}
 		}
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onSignBreak(BlockBreakEvent event)
 	{
@@ -142,7 +140,7 @@ public class BlockListener implements Listener
 		Player player = event.getPlayer();
 		if (block.getState() instanceof Sign)
 		{
-			Sign s = (Sign)block.getState();
+			Sign s = (Sign) block.getState();
 			if (s.getLine(0).equalsIgnoreCase("[SwornParkour]"))
 			{
 				ParkourSign sign = plugin.getParkourSign(block.getLocation());

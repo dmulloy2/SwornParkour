@@ -1,5 +1,6 @@
 package net.dmulloy2.swornparkour.listeners;
 
+import lombok.AllArgsConstructor;
 import net.dmulloy2.swornparkour.SwornParkour;
 import net.dmulloy2.swornparkour.tasks.ParkourJoinTask;
 import net.dmulloy2.swornparkour.types.ParkourGame;
@@ -28,13 +29,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
  * @author dmulloy2
  */
 
+@AllArgsConstructor
 public class PlayerListener implements Listener
 {
 	private final SwornParkour plugin;
-	public PlayerListener(SwornParkour plugin)
-	{
-		this.plugin = plugin;
-	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerInteract(PlayerInteractEvent event)
@@ -64,7 +62,7 @@ public class PlayerListener implements Listener
 	{
 		if (event.isCancelled())
 			return;
-		
+
 		if (! plugin.getParkourHandler().isInParkour(event.getPlayer()))
 			return;
 
@@ -75,14 +73,12 @@ public class PlayerListener implements Listener
 		{
 			if (game.hasFirstCheckpoint() && !game.hasSecondCheckpoint())
 			{
-				player.getPlayer().teleport(zone.getCheckpoint1());
+				player.getPlayer().teleport(zone.getCheck1());
 			}
-	
 			else if (game.hasFirstCheckpoint() && game.hasSecondCheckpoint())
 			{
-				player.getPlayer().teleport(zone.getCheckpoint2());
+				player.getPlayer().teleport(zone.getCheck2());
 			}
-	
 			else
 			{
 				player.getPlayer().teleport(zone.getSpawn());
@@ -109,13 +105,11 @@ public class PlayerListener implements Listener
 			{
 				game.onComplete();
 			}
-
-			if (Util.checkLocation(loc, zone.getCheckpoint1()) && ! game.hasFirstCheckpoint())
+			if (Util.checkLocation(loc, zone.getCheck1()) && ! game.hasFirstCheckpoint())
 			{
 				game.firstCheckpoint();
 			}
-
-			if (Util.checkLocation(loc, zone.getCheckpoint2()) && ! game.hasSecondCheckpoint())
+			if (Util.checkLocation(loc, zone.getCheck2()) && ! game.hasSecondCheckpoint())
 			{
 				game.secondCheckpoint();
 			}
@@ -170,8 +164,7 @@ public class PlayerListener implements Listener
 		if (! event.isCancelled())
 		{
 			// If they didnt move, don't do anything.
-			if (event.getFrom().getBlockX() == event.getTo().getBlockX() &&
-					event.getFrom().getBlockZ() == event.getTo().getBlockZ())
+			if (event.getFrom().getBlockX() == event.getTo().getBlockX() && event.getFrom().getBlockZ() == event.getTo().getBlockZ())
 				return;
 
 			Player player = event.getPlayer();

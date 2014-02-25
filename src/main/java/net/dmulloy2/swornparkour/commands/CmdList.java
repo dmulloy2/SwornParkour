@@ -34,7 +34,7 @@ public class CmdList extends SwornParkourCommand
 		
 		for (ParkourZone zone : plugin.getLoadedArenas())
 		{
-			int id = zone.getId();
+			int id = zone.getGameId();
 			boolean active = false;
 			
 			for (ParkourGame game : handler.getParkourGames())

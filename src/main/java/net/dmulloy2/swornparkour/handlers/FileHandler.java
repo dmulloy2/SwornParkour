@@ -1,4 +1,4 @@
-package net.dmulloy2.swornparkour.io;
+package net.dmulloy2.swornparkour.handlers;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
+import lombok.AllArgsConstructor;
 import net.dmulloy2.swornparkour.SwornParkour;
 import net.dmulloy2.swornparkour.types.EnchantmentType;
 import net.dmulloy2.swornparkour.types.ParkourField;
@@ -15,6 +16,7 @@ import net.dmulloy2.swornparkour.types.ParkourSign;
 import net.dmulloy2.swornparkour.types.ParkourZone;
 import net.dmulloy2.swornparkour.util.FormatUtil;
 import net.dmulloy2.swornparkour.util.MaterialUtil;
+import net.dmulloy2.swornparkour.util.Util;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -27,104 +29,121 @@ import org.bukkit.enchantments.Enchantment;
  * @author dmulloy2
  */
 
-public class FileHelper 
+@AllArgsConstructor
+public class FileHandler
 {
 	private final SwornParkour plugin;
-	public FileHelper(SwornParkour plugin)
-	{
-		this.plugin = plugin;
-	}
-	
-	public void save(ParkourZone pz)
+
+	public final void save(ParkourZone pz)
 	{
 		try
 		{
 			File folder = new File(plugin.getDataFolder(), "games");
-			File file = new File(folder, pz.getId() + ".dat");
-			
-			if (file.exists()) file.delete();
-			
+			File file = new File(folder, pz.getGameId() + ".dat");
+
+			if (file.exists())
+				file.delete();
+
 			file.createNewFile();
-			
+
 			FileConfiguration fc = YamlConfiguration.loadConfiguration(file);
-			fc.set("id", pz.getId());
+			fc.set("id", pz.getGameId());
 
 			ParkourField field = pz.getField();
 			fc.set("world", field.getWorld().getName());
-			
+
 			fc.set("minx", field.getMinx());
 			fc.set("miny", field.getMiny());
 			fc.set("minz", field.getMinz());
-			
+
 			fc.set("maxx", field.getMaxx());
 			fc.set("maxy", field.getMaxy());
 			fc.set("maxz", field.getMaxz());
-			
+
 			Location spawn = pz.getSpawn();
 			String spath = "spawn.";
 			fc.set(spath + "x", spawn.getBlockX());
 			fc.set(spath + "y", spawn.getBlockY());
 			fc.set(spath + "z", spawn.getBlockZ());
-			
-			Location check1 = pz.getCheckpoint1();
+
+			Location check1 = pz.getCheck1();
 			String cpath1 = "check1.";
 			fc.set(cpath1 + "x", check1.getBlockX());
 			fc.set(cpath1 + "y", check1.getBlockY());
 			fc.set(cpath1 + "z", check1.getBlockZ());
-			
-			Location check2 = pz.getCheckpoint2();
+
+			Location check2 = pz.getCheck2();
 			String cpath2 = "check2.";
 			fc.set(cpath2 + "x", check2.getBlockX());
 			fc.set(cpath2 + "y", check2.getBlockY());
 			fc.set(cpath2 + "z", check2.getBlockZ());
-			
+
 			Location end = pz.getEnd();
 			String epath = "end.";
 			fc.set(epath + "x", end.getBlockX());
 			fc.set(epath + "y", end.getBlockY());
 			fc.set(epath + "z", end.getBlockZ());
-			
+
 			fc.set("timesPlayed", pz.getTimesPlayed());
-			
+
 			fc.save(file);
 		}
 		catch (Exception e)
 		{
-			plugin.outConsole(Level.SEVERE, "Error saving file \"{0}\": {1}", pz.getId() + ".dat", e.getMessage());
+			plugin.getLogHandler().log(Level.SEVERE, Util.getUsefulStack(e, "saving game " + pz.getGameId()));
 		}
 	}
-	
-	public void load(File file)
+
+	public final void load(File file)
 	{
-		FileConfiguration fc = YamlConfiguration.loadConfiguration(file);
-		int id = fc.getInt("id");
-		
-		ParkourZone pz = new ParkourZone(plugin, id);
-		
-		World world = plugin.getServer().getWorld(fc.getString("world"));
-		Location min = new Location(world, fc.getInt("minx"), fc.getInt("miny"), fc.getInt("minz"));
-		Location max = new Location(world, fc.getInt("maxx"), fc.getInt("maxy"), fc.getInt("maxz"));
-		
-		ParkourField field = new ParkourField(min, max, world);
-		pz.setField(field);
-		
-		Location spawn = new Location(world, fc.getInt("spawn.x"), fc.getInt("spawn.y"), fc.getInt("spawn.z"));
-		pz.setSpawn(spawn);
-		
-		Location check1 = new Location(world, fc.getInt("check1.x"),fc.getInt("check1.y"), fc.getInt("check1.z"));
-		pz.setCheckpoint1(check1);
-		
-		Location check2 = new Location(world, fc.getInt("check2.x"),fc.getInt("check2.y"), fc.getInt("check2.z"));
-		pz.setCheckpoint2(check2);
-		
-		Location end = new Location(world, fc.getInt("end.x"), fc.getInt("end.y"), fc.getInt("end.z"));
-		pz.setEnd(end);
-		
-		pz.setTimesPlayed(fc.getInt("timesPlayed"));
-		
-		plugin.getLoadedArenas().add(pz);
-		
-		plugin.outConsole("Loaded game number {0}!", id);
+		try
+		{
+			FileConfiguration fc = YamlConfiguration.loadConfiguration(file);
+			int id = fc.getInt("id");
+
+			ParkourZone pz = new ParkourZone(plugin, id);
+
+			String worldName = fc.getString("world");
+			if (worldName == null || worldName.isEmpty())
+			{
+				plugin.outConsole(Level.WARNING, "Encountered an exception loading game {0}: World cannot be null!", id);
+				return;
+			}
+
+			World world = plugin.getServer().getWorld(worldName);
+			if (world == null)
+			{
+				plugin.outConsole(Level.WARNING, "Encountered an exception loading game {0}: World cannot be null!", id);
+				return;
+			}
+
+			Location min = new Location(world, fc.getInt("minx"), fc.getInt("miny"), fc.getInt("minz"));
+			Location max = new Location(world, fc.getInt("maxx"), fc.getInt("maxy"), fc.getInt("maxz"));
+
+			ParkourField field = new ParkourField(min, max, world);
+			pz.setField(field);
+
+			Location spawn = new Location(world, fc.getInt("spawn.x"), fc.getInt("spawn.y"), fc.getInt("spawn.z"));
+			pz.setSpawn(spawn);
+
+			Location check1 = new Location(world, fc.getInt("check1.x"), fc.getInt("check1.y"), fc.getInt("check1.z"));
+			pz.setCheck1(check1);
+
+			Location check2 = new Location(world, fc.getInt("check2.x"), fc.getInt("check2.y"), fc.getInt("check2.z"));
+			pz.setCheck2(check2);
+
+			Location end = new Location(world, fc.getInt("end.x"), fc.getInt("end.y"), fc.getInt("end.z"));
+			pz.setEnd(end);
+
+			pz.setTimesPlayed(fc.getInt("timesPlayed"));
+
+			plugin.getLoadedArenas().add(pz);
+			plugin.outConsole("Loaded game {0}!", id);
+		}
+		catch (Exception e)
+		{
+			plugin.getLogHandler().log(Level.SEVERE, Util.getUsefulStack(e, "loading " + file.getName()));
+		}
 	}
 
 	public void readReward(int pointValue, String line)
@@ -267,7 +286,7 @@ public class FileHelper
 
 			Location loc = sign.getLocation();
 			
-			fc.set(path + "gameId", sign.getZone().getId());
+			fc.set(path + "gameId", sign.getZone().getGameId());
 			
 			fc.set(path + "world", loc.getWorld().getName());
 			fc.set(path + "x", loc.getBlockX());

@@ -95,7 +95,7 @@ public class ParkourHandler
 	{
 		for (ParkourCreator creator : creators)
 		{
-			if (creator.player.getName().equals(player.getName()))
+			if (creator.getPlayer().getName().equals(player.getName()))
 				return creator;
 		}
 
@@ -106,7 +106,7 @@ public class ParkourHandler
 	{
 		for (ParkourCreator creator : creators)
 		{
-			if (creator.player.getName().equals(player.getName()))
+			if (creator.getPlayer().getName().equals(player.getName()))
 				return true;
 		}
 
@@ -156,7 +156,7 @@ public class ParkourHandler
 		}
 
 		plugin.getLoadedArenas().remove(plugin.getParkourZone(gameId));
-		return plugin.getFileHelper().deleteFile(gameId);
+		return plugin.getFileHandler().deleteFile(gameId);
 	}
 
 	public boolean inventoryHasRoom(Player player)
