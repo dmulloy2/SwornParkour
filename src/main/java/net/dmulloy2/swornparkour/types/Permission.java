@@ -1,10 +1,16 @@
 package net.dmulloy2.swornparkour.types;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import net.dmulloy2.types.IPermission;
+
 /**
  * @author dmulloy2
  */
 
-public enum Permission
+@Getter
+@AllArgsConstructor
+public enum Permission implements IPermission
 {
 	CMD_RELOAD("cmd.reload"),
 	CMD_SETPOINT("cmd.setpoint"),
@@ -15,9 +21,5 @@ public enum Permission
 	CMD_SPAWN("cmd.spawn"),
 	BUILD("build");
 	
-	public final String node;
-	Permission(final String node) 
-	{
-		this.node = node;
-	}
+	private final String node;
 }

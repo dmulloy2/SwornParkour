@@ -3,7 +3,7 @@ package net.dmulloy2.swornparkour.types;
 import lombok.Getter;
 import net.dmulloy2.swornparkour.SwornParkour;
 import net.dmulloy2.swornparkour.commands.CmdSetPoint;
-import net.dmulloy2.swornparkour.util.FormatUtil;
+import net.dmulloy2.util.FormatUtil;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

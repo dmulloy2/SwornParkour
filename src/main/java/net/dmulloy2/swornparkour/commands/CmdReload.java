@@ -25,6 +25,6 @@ public class CmdReload extends SwornParkourCommand
 	{
 		plugin.reload();
 		sendpMessage(getMessage("reload"));
-		outConsole(getMessage("log_reload"));
+		plugin.getLogHandler().log(getMessage("log_reload"));
 	}
 }

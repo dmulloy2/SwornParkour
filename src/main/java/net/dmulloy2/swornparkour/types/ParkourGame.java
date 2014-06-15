@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 
 import net.dmulloy2.swornparkour.SwornParkour;
 import net.dmulloy2.swornparkour.commands.CmdClaim;
-import net.dmulloy2.swornparkour.util.FormatUtil;
+import net.dmulloy2.util.FormatUtil;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;

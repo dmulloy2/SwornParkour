@@ -3,7 +3,7 @@ package net.dmulloy2.swornparkour.commands;
 import net.dmulloy2.swornparkour.SwornParkour;
 import net.dmulloy2.swornparkour.types.ParkourKickReason;
 import net.dmulloy2.swornparkour.types.Permission;
-import net.dmulloy2.swornparkour.util.Util;
+import net.dmulloy2.util.Util;
 
 import org.bukkit.entity.Player;
 

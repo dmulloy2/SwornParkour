@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.dmulloy2.swornparkour.SwornParkour;
-import net.dmulloy2.swornparkour.util.FormatUtil;
+import net.dmulloy2.util.FormatUtil;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

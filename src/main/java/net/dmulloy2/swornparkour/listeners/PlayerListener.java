@@ -7,8 +7,8 @@ import net.dmulloy2.swornparkour.types.ParkourGame;
 import net.dmulloy2.swornparkour.types.ParkourKickReason;
 import net.dmulloy2.swornparkour.types.ParkourPlayer;
 import net.dmulloy2.swornparkour.types.ParkourZone;
-import net.dmulloy2.swornparkour.util.FormatUtil;
-import net.dmulloy2.swornparkour.util.Util;
+import net.dmulloy2.util.FormatUtil;
+import net.dmulloy2.util.Util;
 
 import org.bukkit.Location;
 import org.bukkit.Material;

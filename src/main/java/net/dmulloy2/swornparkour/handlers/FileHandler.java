@@ -9,14 +9,14 @@ import java.util.logging.Level;
 
 import lombok.AllArgsConstructor;
 import net.dmulloy2.swornparkour.SwornParkour;
-import net.dmulloy2.swornparkour.types.EnchantmentType;
 import net.dmulloy2.swornparkour.types.ParkourField;
 import net.dmulloy2.swornparkour.types.ParkourReward;
 import net.dmulloy2.swornparkour.types.ParkourSign;
 import net.dmulloy2.swornparkour.types.ParkourZone;
-import net.dmulloy2.swornparkour.util.FormatUtil;
-import net.dmulloy2.swornparkour.util.MaterialUtil;
-import net.dmulloy2.swornparkour.util.Util;
+import net.dmulloy2.types.EnchantmentType;
+import net.dmulloy2.util.FormatUtil;
+import net.dmulloy2.util.MaterialUtil;
+import net.dmulloy2.util.Util;
 
 import org.bukkit.Location;
 import org.bukkit.Material;

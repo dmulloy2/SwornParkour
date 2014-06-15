@@ -25,11 +25,16 @@ import java.util.MissingResourceException;
 import java.util.logging.Level;
 
 import lombok.Getter;
+import net.dmulloy2.SwornPlugin;
+import net.dmulloy2.commands.CmdHelp;
+import net.dmulloy2.handlers.CommandHandler;
+import net.dmulloy2.handlers.LogHandler;
+import net.dmulloy2.handlers.PermissionHandler;
+import net.dmulloy2.handlers.ResourceHandler;
 import net.dmulloy2.swornparkour.commands.CmdAbandon;
 import net.dmulloy2.swornparkour.commands.CmdClaim;
 import net.dmulloy2.swornparkour.commands.CmdCreate;
 import net.dmulloy2.swornparkour.commands.CmdDelete;
-import net.dmulloy2.swornparkour.commands.CmdHelp;
 import net.dmulloy2.swornparkour.commands.CmdJoin;
 import net.dmulloy2.swornparkour.commands.CmdKick;
 import net.dmulloy2.swornparkour.commands.CmdLeave;
@@ -38,19 +43,15 @@ import net.dmulloy2.swornparkour.commands.CmdReload;
 import net.dmulloy2.swornparkour.commands.CmdSetPoint;
 import net.dmulloy2.swornparkour.commands.CmdSpawn;
 import net.dmulloy2.swornparkour.commands.CmdVersion;
-import net.dmulloy2.swornparkour.handlers.CommandHandler;
 import net.dmulloy2.swornparkour.handlers.FileHandler;
-import net.dmulloy2.swornparkour.handlers.LogHandler;
 import net.dmulloy2.swornparkour.handlers.ParkourHandler;
-import net.dmulloy2.swornparkour.handlers.PermissionHandler;
-import net.dmulloy2.swornparkour.handlers.ResourceHandler;
 import net.dmulloy2.swornparkour.listeners.BlockListener;
 import net.dmulloy2.swornparkour.listeners.PlayerListener;
 import net.dmulloy2.swornparkour.tasks.ParkourJoinTask;
 import net.dmulloy2.swornparkour.types.ParkourReward;
 import net.dmulloy2.swornparkour.types.ParkourSign;
 import net.dmulloy2.swornparkour.types.ParkourZone;
-import net.dmulloy2.swornparkour.util.Util;
+import net.dmulloy2.util.Util;
 import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.ChatColor;
@@ -59,7 +60,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
@@ -67,15 +67,12 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
  * @author dmulloy2
  */
 
-public class SwornParkour extends JavaPlugin
+public class SwornParkour extends SwornPlugin
 {	
 	/** Handlers **/
-	private @Getter PermissionHandler permissionHandler;
 	private @Getter ResourceHandler resourceHandler;
-	private @Getter CommandHandler commandHandler;
 	private @Getter ParkourHandler parkourHandler;
 	private @Getter FileHandler fileHandler;
-	private @Getter LogHandler logHandler;
 
 	/** Integration **/
 	private @Getter WorldEditPlugin worldEdit;
@@ -104,7 +101,7 @@ public class SwornParkour extends JavaPlugin
 		/** Register Handlers **/
 		logHandler = new LogHandler(this);
 		commandHandler = new CommandHandler(this);
-		permissionHandler = new PermissionHandler();
+		permissionHandler = new PermissionHandler("parkour");
 
 		saveResource("messages.properties", true);
 		resourceHandler = new ResourceHandler(this, this.getClassLoader());
@@ -133,19 +130,19 @@ public class SwornParkour extends JavaPlugin
 
 		/** Register Commands **/
 		commandHandler.setCommandPrefix("parkour");
-		commandHandler.registerCommand(new CmdAbandon(this));
-		commandHandler.registerCommand(new CmdClaim(this));
-		commandHandler.registerCommand(new CmdCreate(this));
-		commandHandler.registerCommand(new CmdDelete(this));
-		commandHandler.registerCommand(new CmdHelp(this));
-		commandHandler.registerCommand(new CmdJoin(this));
-		commandHandler.registerCommand(new CmdKick(this));
-		commandHandler.registerCommand(new CmdLeave(this));
-		commandHandler.registerCommand(new CmdList(this));
-		commandHandler.registerCommand(new CmdReload(this));
-		commandHandler.registerCommand(new CmdSetPoint(this));
-		commandHandler.registerCommand(new CmdSpawn(this));
-		commandHandler.registerCommand(new CmdVersion(this));
+		commandHandler.registerPrefixedCommand(new CmdAbandon(this));
+		commandHandler.registerPrefixedCommand(new CmdClaim(this));
+		commandHandler.registerPrefixedCommand(new CmdCreate(this));
+		commandHandler.registerPrefixedCommand(new CmdDelete(this));
+		commandHandler.registerPrefixedCommand(new CmdHelp(this));
+		commandHandler.registerPrefixedCommand(new CmdJoin(this));
+		commandHandler.registerPrefixedCommand(new CmdKick(this));
+		commandHandler.registerPrefixedCommand(new CmdLeave(this));
+		commandHandler.registerPrefixedCommand(new CmdList(this));
+		commandHandler.registerPrefixedCommand(new CmdReload(this));
+		commandHandler.registerPrefixedCommand(new CmdSetPoint(this));
+		commandHandler.registerPrefixedCommand(new CmdSpawn(this));
+		commandHandler.registerPrefixedCommand(new CmdVersion(this));
 
 		long finish = System.currentTimeMillis();
 

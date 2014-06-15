@@ -6,7 +6,7 @@ import net.dmulloy2.swornparkour.types.ParkourField;
 import net.dmulloy2.swornparkour.types.ParkourSign;
 import net.dmulloy2.swornparkour.types.ParkourZone;
 import net.dmulloy2.swornparkour.types.Permission;
-import net.dmulloy2.swornparkour.util.FormatUtil;
+import net.dmulloy2.util.FormatUtil;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
