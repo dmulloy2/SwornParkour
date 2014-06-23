@@ -227,7 +227,7 @@ public class ParkourGame
 			if (plugin.isCashRewardsEnabled())
 			{
 				int reward = plugin.getCashRewardMultiplier() * points;
-				plugin.getEconomy().depositPlayer(player.getPlayer().getName(), reward);
+				plugin.getEconomy().depositPlayer(player.getPlayer(), reward);
 				player.sendMessage("&a{0} has been added to your balance!", plugin.getEconomy().format(reward));
 			}
 		}

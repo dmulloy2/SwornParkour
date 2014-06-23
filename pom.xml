@@ -72,23 +72,23 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-		<artifactId>maven-shade-plugin</artifactId>
-		<version>1.4</version>
-		<executions>
-		  <execution>
-		    <phase>package</phase>
-			<goals>
-			  <goal>shade</goal>
-			</goals>
-			<configuration>
-			  <artifactSet>
-			    <includes>
-			      <include>net.dmulloy2:swornapi*</include>
-			    </includes>
-			  </artifactSet>
-		    </configuration>
-		  </execution>
-	    </executions>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>1.4</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <artifactSet>
+                <includes>
+                  <include>net.dmulloy2:swornapi*</include>
+                </includes>
+              </artifactSet>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
     <resources>
@@ -119,7 +119,7 @@
       <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
- 	  <groupId>org.projectlombok</groupId>
+      <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>0.12.0</version>
       <scope>provided</scope>
@@ -132,7 +132,7 @@
     <dependency>
       <groupId>net.milkbowl.vault</groupId>
       <artifactId>Vault</artifactId>
-      <version>1.2.31</version>
+      <version>1.4.1</version>
     </dependency>
     <dependency>
       <groupId>net.ess3</groupId>
