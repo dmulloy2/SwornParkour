@@ -21,6 +21,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.logging.Level;
 
@@ -79,24 +80,19 @@ public class SwornParkour extends SwornPlugin
 	private @Getter Economy economy;
 
 	/** Lists **/
-	private @Getter
-	final List<ParkourSign> signs = new ArrayList<ParkourSign>();
-	private @Getter
-	final List<ParkourZone> loadedArenas = new ArrayList<ParkourZone>();
+	private @Getter List<ParkourSign> signs = new ArrayList<>();
+	private @Getter List<ParkourZone> loadedArenas = new ArrayList<>();
 
-	/** HashMaps **/
-	private @Getter
-	final HashMap<Player, ParkourJoinTask> waiting = new HashMap<Player, ParkourJoinTask>();
-	private @Getter
-	final HashMap<Integer, ParkourReward> parkourRewards = new HashMap<Integer, ParkourReward>();
+	/** Maps **/
+	private @Getter Map<Player, ParkourJoinTask> waiting = new HashMap<>();
+	private @Getter Map<Integer, ParkourReward> parkourRewards = new HashMap<>();
 
 	/** Configuration **/
 	private @Getter int teleportTimer, cashRewardMultiplier;
 	private @Getter boolean cumulativeRewards, itemRewardsEnabled, cashRewardsEnabled, debug;
 
 	/** Global Prefix **/
-	private @Getter
-	final String prefix = ChatColor.GOLD + "[Parkour] ";
+	private @Getter String prefix = ChatColor.GOLD + "[Parkour] ";
 
 	@Override
 	public void onEnable()
