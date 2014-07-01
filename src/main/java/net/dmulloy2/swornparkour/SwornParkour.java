@@ -16,7 +16,7 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 package net.dmulloy2.swornparkour;
- 
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,7 +68,7 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
  */
 
 public class SwornParkour extends SwornPlugin
-{	
+{
 	/** Handlers **/
 	private @Getter ResourceHandler resourceHandler;
 	private @Getter ParkourHandler parkourHandler;
@@ -79,19 +79,24 @@ public class SwornParkour extends SwornPlugin
 	private @Getter Economy economy;
 
 	/** Lists **/
-	private @Getter List<ParkourSign> signs = new ArrayList<ParkourSign>();
-	private @Getter List<ParkourZone> loadedArenas = new ArrayList<ParkourZone>();
+	private @Getter
+	final List<ParkourSign> signs = new ArrayList<ParkourSign>();
+	private @Getter
+	final List<ParkourZone> loadedArenas = new ArrayList<ParkourZone>();
 
 	/** HashMaps **/
-	private @Getter HashMap<Player, ParkourJoinTask> waiting = new HashMap<Player, ParkourJoinTask>();
-	private @Getter HashMap<Integer, ParkourReward> parkourRewards = new HashMap<Integer, ParkourReward>();
+	private @Getter
+	final HashMap<Player, ParkourJoinTask> waiting = new HashMap<Player, ParkourJoinTask>();
+	private @Getter
+	final HashMap<Integer, ParkourReward> parkourRewards = new HashMap<Integer, ParkourReward>();
 
 	/** Configuration **/
 	private @Getter int teleportTimer, cashRewardMultiplier;
 	private @Getter boolean cumulativeRewards, itemRewardsEnabled, cashRewardsEnabled, debug;
 
 	/** Global Prefix **/
-	private @Getter String prefix = ChatColor.GOLD + "[Parkour] ";
+	private @Getter
+	final String prefix = ChatColor.GOLD + "[Parkour] ";
 
 	@Override
 	public void onEnable()
@@ -144,9 +149,25 @@ public class SwornParkour extends SwornPlugin
 		commandHandler.registerPrefixedCommand(new CmdSpawn(this));
 		commandHandler.registerPrefixedCommand(new CmdVersion(this));
 
-		long finish = System.currentTimeMillis();
+		outConsole("{0} has been enabled ({1}ms)", getDescription().getFullName(), System.currentTimeMillis() - start);
+	}
 
-		outConsole("{0} has been enabled ({1}ms)", getDescription().getFullName(), finish - start);
+	@Override
+	public void onDisable()
+	{
+		long start = System.currentTimeMillis();
+
+		getServer().getServicesManager().unregisterAll(this);
+		getServer().getScheduler().cancelTasks(this);
+
+		for (ParkourZone zone : loadedArenas)
+		{
+			fileHandler.save(zone);
+		}
+
+		clearMemory();
+
+		outConsole("{0} has been disabled ({1}ms)", getDescription().getFullName(), System.currentTimeMillis() - start);
 	}
 
 	private void createDirectories()
@@ -171,26 +192,6 @@ public class SwornParkour extends SwornPlugin
 
 			players.delete();
 		}
-	}
-
-	@Override
-	public void onDisable()
-	{
-		long start = System.currentTimeMillis();
-
-		getServer().getServicesManager().unregisterAll(this);
-		getServer().getScheduler().cancelTasks(this);
-
-		for (ParkourZone zone : loadedArenas)
-		{
-			fileHandler.save(zone);
-		}
-
-		clearMemory();
-
-		long finish = System.currentTimeMillis();
-
-		outConsole("{0} has been disabled ({1}ms)", getDescription().getFullName(), finish - start);
 	}
 
 	public void loadGames()
