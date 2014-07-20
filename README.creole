@@ -1,5 +1,5 @@
-{{http://i.troll.ws/2acf8b1b.jpg}}
-=SwornParkour
+{{http://shadowvolt.com/media/SwornParkour.jpg}}
+= SwornParkour
 ** SwornParkour is a plugin whose goal is to add a whole new dimension to parkour: thought. Too many times I have seen parkour as just something people do on the leaves of my HG spawn when they are bored, or attempting to "parkour" around spawn. My hope by releasing this plugin is that players will think about possible routes to earn more points, and in turn more items and money. This plugin attempts to accomplish this by having builders place LapisLazuli blocks in seemingly random, hard to find places. Players will then attempt to find and reach these blocks by completing harder jumps or finding secret passageways. **
 ----
 
@@ -13,7 +13,7 @@
 
 ==Development Builds
 ** Development Builds can be found at our continuous integration server. These builds are not approved by the BukkitDev staff and are to be used at your own risk. **
-** http://ci.minesworn.com/job/SwornParkour/ **
+** http://ci.shadowvolt.com/job/SwornParkour/ **
 ----
 
 ==Installation
@@ -71,7 +71,7 @@
 
 
 ==Official SwornParkour Servers
-{{http://i.troll.ws/d4a0ffb7.gif}}
+{{http://shadowvolt.com/media/banner.gif}}
 ----
 
 ==Bug Reporting

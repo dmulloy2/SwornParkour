@@ -13,25 +13,15 @@ public class CmdVersion extends SwornParkourCommand
 		super(plugin);
 		this.name = "version";
 		this.aliases.add("v");
-		this.description = "Display " + plugin.getName() + " version";
-		
-		this.mustBePlayer = false;
+		this.description = "Display version info";
 	}
 
 	@Override
 	public void perform()
 	{
 		sendMessage("&3====[ &eSwornParkour &3]====");
-		
-		StringBuilder line = new StringBuilder();
-		line.append("&bAuthor: ");
-		for (String author : plugin.getDescription().getAuthors())
-		{
-			line.append("&e" + author + "&b, ");
-		}
-		line.deleteCharAt(line.lastIndexOf(","));
-		sendMessage(line.toString());
-		
-		sendMessage("&bVersion: &e{0}", plugin.getDescription().getFullName());
+		sendMessage("&bVersion&e: {0}", plugin.getDescription().getVersion());
+		sendMessage("&bAuthor&e: dmulloy2");
+		sendMessage("&bIssues&e: https://github.com/dmulloy2/SwornParkour/issues");
 	}
 }
