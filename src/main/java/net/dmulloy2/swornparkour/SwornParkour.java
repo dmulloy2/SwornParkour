@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.MissingResourceException;
 import java.util.logging.Level;
 
 import lombok.Getter;
@@ -104,8 +103,11 @@ public class SwornParkour extends SwornPlugin
 		commandHandler = new CommandHandler(this);
 		permissionHandler = new PermissionHandler("parkour");
 
-		saveResource("messages.properties", true);
-		resourceHandler = new ResourceHandler(this, this.getClassLoader());
+		File messages = new File(getDataFolder(), "messages.properties");
+		if (messages.exists())
+			messages.delete();
+
+		resourceHandler = new ResourceHandler(this);
 
 		parkourHandler = new ParkourHandler(this);
 		fileHandler = new FileHandler(this);
@@ -252,23 +254,12 @@ public class SwornParkour extends SwornPlugin
 
 	public void debug(String string, Object... objects)
 	{
-		if (debug)
-			outConsole("[Debug] " + string, objects);
+		logHandler.debug(string, objects);
 	}
 
-	/** Messages **/
 	public String getMessage(String string)
 	{
-		try
-		{
-			// TODO: Move all the messages to messages.properties
-			return resourceHandler.getMessages().getString(string);
-		}
-		catch (MissingResourceException ex)
-		{
-			outConsole(Level.WARNING, "Messages locale is missing key for: {0}", string);
-			return null;
-		}
+		return resourceHandler.getMessage(string);
 	}
 
 	/** Update Rewards Table **/
