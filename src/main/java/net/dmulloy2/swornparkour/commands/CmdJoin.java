@@ -15,7 +15,7 @@ public class CmdJoin extends SwornParkourCommand
 		super(plugin);
 		this.name = "join";
 		this.aliases.add("j");
-		this.requiredArgs.add("game");
+		this.addRequiredArg("game");
 		this.description = "Join a parkour game!";
 		
 		this.mustBePlayer = true;

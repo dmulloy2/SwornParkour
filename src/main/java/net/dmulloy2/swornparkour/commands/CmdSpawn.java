@@ -13,7 +13,7 @@ public class CmdSpawn extends SwornParkourCommand
 		super(plugin);
 		this.name = "spawn";
 		this.aliases.add("spawnpoint");
-		this.requiredArgs.add("id");
+		this.addRequiredArg("id");
 		this.description = "Teleport to the spawn point of an arena";
 		this.permission = Permission.CMD_SPAWN;
 		

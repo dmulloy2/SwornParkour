@@ -14,7 +14,7 @@ public class CmdDelete extends SwornParkourCommand
 		super(plugin);
 		this.name = "delete";
 		this.aliases.add("d");
-		this.requiredArgs.add("id");
+		this.addRequiredArg("id");
 		this.description = "Deletes an arena";
 		this.permission = Permission.CMD_DELETE;
 

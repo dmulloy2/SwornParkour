@@ -17,7 +17,7 @@ public class CmdKick extends SwornParkourCommand
 	{
 		super(plugin);
 		this.name = "kick";
-		this.requiredArgs.add("player");
+		this.addRequiredArg("player");
 		this.description = "Kick a player from a game";
 		this.permission = Permission.CMD_KICK;
 		
