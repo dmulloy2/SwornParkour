@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.dmulloy2</groupId>
   <artifactId>swornparkour</artifactId>
-  <version>1.4-SNAPSHOT</version>
+  <version>2.0-SNAPSHOT</version>
   <name>SwornParkour</name>
 
   <properties>
@@ -137,7 +137,7 @@
     <dependency>
       <groupId>net.milkbowl.vault</groupId>
       <artifactId>Vault</artifactId>
-      <version>1.5.0</version>
+      <version>1.5.2</version>
     </dependency>
     <dependency>
       <groupId>net.ess3</groupId>

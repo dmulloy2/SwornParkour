@@ -106,14 +106,14 @@ public class FileHandler
 			String worldName = fc.getString("world");
 			if (worldName == null || worldName.isEmpty())
 			{
-				plugin.outConsole(Level.WARNING, "Encountered an exception loading game {0}: World cannot be null!", id);
+				plugin.log(Level.WARNING, "Encountered an exception loading game {0}: World cannot be null!", id);
 				return;
 			}
 
 			World world = plugin.getServer().getWorld(worldName);
 			if (world == null)
 			{
-				plugin.outConsole(Level.WARNING, "Encountered an exception loading game {0}: World cannot be null!", id);
+				plugin.log(Level.WARNING, "Encountered an exception loading game {0}: World cannot be null!", id);
 				return;
 			}
 
@@ -138,7 +138,7 @@ public class FileHandler
 			pz.setTimesPlayed(fc.getInt("timesPlayed"));
 
 			plugin.getLoadedArenas().add(pz);
-			plugin.outConsole("Loaded game {0}!", id);
+			plugin.log("Loaded game {0}!", id);
 		}
 		catch (Exception e)
 		{
@@ -252,7 +252,7 @@ public class FileHandler
 		}
 		catch (Exception e)
 		{
-			plugin.outConsole(Level.SEVERE, "Error deleting file \"{0}\":", gameId + ".dat");
+			plugin.log(Level.SEVERE, "Error deleting file \"{0}\":", gameId + ".dat");
 			e.printStackTrace();
 			return false;
 		}
@@ -274,7 +274,7 @@ public class FileHandler
 		}
 		catch (Exception e) 
 		{
-			plugin.outConsole(Level.SEVERE, "Could not update sign save: {0}", e.getMessage());
+			plugin.log(Level.SEVERE, "Could not update sign save: {0}", e.getMessage());
 			return;
 		}
 		
@@ -302,7 +302,7 @@ public class FileHandler
 		}
 		catch (Exception e) 
 		{
-			plugin.outConsole(Level.SEVERE, "Could not update sign save: {0}", e.getMessage());
+			plugin.log(Level.SEVERE, "Could not update sign save: {0}", e.getMessage());
 			return;
 		}
 	}

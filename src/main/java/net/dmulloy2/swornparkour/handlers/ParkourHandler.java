@@ -85,7 +85,7 @@ public class ParkourHandler
 
 	public void createNewParkourGame(Player player)
 	{
-		ParkourCreator creator = new ParkourCreator(plugin, player, plugin.getLoadedArenas().size() + 1);
+		ParkourCreator creator = new ParkourCreator(plugin.getLoadedArenas().size() + 1, player, plugin);
 		creator.start();
 
 		creators.add(creator);

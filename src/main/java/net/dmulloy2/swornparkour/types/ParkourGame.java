@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import net.dmulloy2.swornparkour.SwornParkour;
 import net.dmulloy2.swornparkour.commands.CmdClaim;
+import net.dmulloy2.swornparkour.integration.VaultHandler;
 import net.dmulloy2.util.FormatUtil;
 
 import org.bukkit.GameMode;
@@ -130,7 +131,7 @@ public class ParkourGame
 
 		if (reason == ParkourKickReason.QUIT)
 		{
-			plugin.outConsole("Player {0} leaving game {1} from quit!", player.getPlayer().getName(), gameId);
+			plugin.log("Player {0} leaving game {1} from quit!", player.getPlayer().getName(), gameId);
 
 			returnInventory();
 
@@ -222,13 +223,14 @@ public class ParkourGame
 			plugin.getParkourHandler().getRedemption().put(player.getPlayer().getName(), redemption);
 		}
 
-		if (plugin.getEconomy() != null)
+		if (plugin.isCashRewardsEnabled())
 		{
-			if (plugin.isCashRewardsEnabled())
+			VaultHandler vault = plugin.getVault();
+			if (vault != null && vault.isEnabled())
 			{
 				int reward = plugin.getCashRewardMultiplier() * points;
-				plugin.getEconomy().depositPlayer(player.getPlayer(), reward);
-				player.sendMessage("&a{0} has been added to your balance!", plugin.getEconomy().format(reward));
+				vault.depositPlayer(player.getPlayer(), reward);
+				player.sendMessage("&a{0] has been added to your balance!", vault.format(reward));
 			}
 		}
 	}
@@ -236,11 +238,8 @@ public class ParkourGame
 	public void endGame()
 	{
 		teleport(player.getSpawnBack());
-
 		plugin.getServer().broadcastMessage(FormatUtil.format("&eParkour Game &b{0} &ehas completed!", getId()));
-
 		plugin.getParkourHandler().getParkourGames().remove(this);
-
 		plugin.updateSigns(gameId);
 	}
 
