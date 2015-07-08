@@ -209,7 +209,7 @@ public class SwornParkour extends SwornPlugin implements Reloadable
 	{
 		for (ParkourSign sign : signs)
 		{
-			if (Util.checkLocation(sign.getLocation(), loc))
+			if (Util.coordsEqual(sign.getLocation(), loc))
 				return sign;
 		}
 

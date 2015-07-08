@@ -101,15 +101,15 @@ public class PlayerListener implements Listener
 		if (zone.getField().isInside(player.getPlayer()))
 		{
 			Location loc = player.getPlayer().getLocation();
-			if (Util.checkLocation(loc, zone.getEnd()))
+			if (Util.coordsEqual(loc, zone.getEnd()))
 			{
 				game.onComplete();
 			}
-			if (Util.checkLocation(loc, zone.getCheck1()) && ! game.hasFirstCheckpoint())
+			if (! game.hasFirstCheckpoint() && Util.coordsEqual(loc, zone.getCheck1()))
 			{
 				game.firstCheckpoint();
 			}
-			if (Util.checkLocation(loc, zone.getCheck2()) && ! game.hasSecondCheckpoint())
+			if (! game.hasSecondCheckpoint() && Util.coordsEqual(loc, zone.getCheck2()))
 			{
 				game.secondCheckpoint();
 			}
