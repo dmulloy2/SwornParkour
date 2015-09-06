@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
+import net.dmulloy2.integration.VaultHandler;
 import net.dmulloy2.swornparkour.SwornParkour;
 import net.dmulloy2.swornparkour.commands.CmdClaim;
-import net.dmulloy2.swornparkour.integration.VaultHandler;
 import net.dmulloy2.util.FormatUtil;
 
 import org.bukkit.GameMode;
@@ -226,7 +226,7 @@ public class ParkourGame
 		if (plugin.isCashRewardsEnabled())
 		{
 			VaultHandler vault = plugin.getVault();
-			if (vault != null && vault.isEnabled())
+			if (vault != null && vault.isEconPresent())
 			{
 				int reward = plugin.getCashRewardMultiplier() * points;
 				vault.depositPlayer(player.getPlayer(), reward);
