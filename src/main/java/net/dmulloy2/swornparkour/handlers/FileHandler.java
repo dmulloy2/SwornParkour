@@ -211,7 +211,7 @@ public class FileHandler
 			}
 		}
 		
-		String displayName = ""; 
+		String displayName = "";
 		if (readName)
 		{
 			String str = line.substring(line.indexOf("name:") + 5);
@@ -268,11 +268,11 @@ public class FileHandler
 			file.delete();
 		}
 		
-		try 
-		{ 
+		try
+		{
 			file.createNewFile();
 		}
-		catch (Exception e) 
+		catch (Exception e)
 		{
 			plugin.log(Level.SEVERE, "Could not update sign save: {0}", e.getMessage());
 			return;
@@ -296,11 +296,11 @@ public class FileHandler
 		
 		fc.set("total", plugin.getSigns().size());
 		
-		try 
-		{ 
+		try
+		{
 			fc.save(file);
 		}
-		catch (Exception e) 
+		catch (Exception e)
 		{
 			plugin.log(Level.SEVERE, "Could not update sign save: {0}", e.getMessage());
 			return;
@@ -310,10 +310,11 @@ public class FileHandler
 	public void loadSigns()
 	{
 		File file = new File(plugin.getDataFolder(), "signs.yml");
-		if (! file.exists()) return;
-		
+		if (! file.exists())
+			return;
+
 		YamlConfiguration fc = YamlConfiguration.loadConfiguration(file);
-		
+
 		for (int i = 0; i < fc.getInt("total"); i++)
 		{
 			String path = "signs." + i + ".";
@@ -323,14 +324,11 @@ public class FileHandler
 				if (world != null)
 				{
 					Location loc = new Location(world, fc.getInt(path + "x"), fc.getInt(path + "y"), fc.getInt(path + "z"));
-					if (loc != null)
+					ParkourZone zone = plugin.getParkourZone(fc.getInt(path + "gameId"));
+					if (zone != null)
 					{
-						ParkourZone zone = plugin.getParkourZone(fc.getInt(path + "gameId"));
-						if (zone != null)
-						{
-							ParkourSign sign = new ParkourSign(plugin, loc, zone, i);
-							plugin.getSigns().add(sign);
-						}
+						ParkourSign sign = new ParkourSign(plugin, loc, zone, i);
+						plugin.getSigns().add(sign);
 					}
 				}
 			}

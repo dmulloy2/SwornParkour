@@ -53,7 +53,6 @@ import net.dmulloy2.swornparkour.tasks.ParkourJoinTask;
 import net.dmulloy2.swornparkour.types.ParkourReward;
 import net.dmulloy2.swornparkour.types.ParkourSign;
 import net.dmulloy2.swornparkour.types.ParkourZone;
-import net.dmulloy2.types.Reloadable;
 import net.dmulloy2.util.FormatUtil;
 import net.dmulloy2.util.Util;
 
@@ -65,7 +64,7 @@ import org.bukkit.plugin.PluginManager;
  * @author dmulloy2
  */
 
-public class SwornParkour extends SwornPlugin implements Reloadable
+public class SwornParkour extends SwornPlugin
 {
 	// Handlers
 	private @Getter ResourceHandler resourceHandler;
