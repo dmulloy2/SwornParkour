@@ -1,6 +1,6 @@
 name: SwornParkour
 main: net.dmulloy2.swornparkour.SwornParkour
-version: ${project.version} (Build ${project.build.number})
+version: ${project.version}${project.build.number}
 author: dmulloy2
 softdepend: [WorldEdit, Vault, Essentials]
 description: Comprehensive Parkour plugin that aims to revolutionize the parkour process by adding thought
